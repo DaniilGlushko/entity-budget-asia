@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Onest:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
 <style>
-/* Layout: заголовок с допущениями → три карточки-итога → полосы «в месяц» → подробная таблица → риски → источники */
+/* Layout: заголовок с допущениями → четыре карточки-итога → полосы «в месяц» → подробная таблица → риски → источники */
 :root{
   --bg:#F3F5F4; --surface:#FFFFFF; --ink:#15212B; --muted:#5B6870; --line:#D9E0E1;
   --accent:#0E6B6B; --accent-soft:#DCEDEC;
@@ -33,7 +33,7 @@
   --ok:#6BD39A; --ok-bg:#163527; --warn:#E7B45A; --warn-bg:#3A2C10; --crit:#F08A83; --crit-bg:#3D1C1A;
   color-scheme:dark}
 body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.5}
-.wrap{max-width:1120px;margin:0 auto;padding-block:32px 56px;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));display:grid;gap:36px}
+.wrap{max-width:1180px;margin:0 auto;padding-block:32px 56px;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));display:grid;gap:36px}
 h1,h2,h3{font-family:var(--f-display);font-weight:700;text-wrap:balance;margin:0;letter-spacing:-.01em}
 h1{font-size:clamp(26px,4.6vw,42px);line-height:1.1}
 h2{font-size:19px;font-weight:500}
@@ -48,13 +48,17 @@ header .lede{max-width:68ch;color:var(--muted)}
 .assume span{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:4px 10px;font-size:13px}
 .assume b{font-family:var(--f-mono);font-weight:600}
 
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+@media (max-width:1100px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:620px){.cards{grid-template-columns:1fr}}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px;display:grid;gap:14px;align-content:start;min-width:0}
 .card .top{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
 .card h3{font-size:22px}
 .card .form{font-size:13px;color:var(--muted)}
-.big{font-family:var(--f-display);font-size:34px;font-weight:700;line-height:1}
+.big{font-family:var(--f-display);font-size:32px;font-weight:700;line-height:1}
 .big small{font-family:var(--f-body);font-size:14px;font-weight:500;color:var(--muted)}
+.pair{display:flex;gap:18px;flex-wrap:wrap;align-items:baseline}
+.pair .city{display:block;font-size:12px;color:var(--muted);margin-bottom:4px}
 .kv{display:grid;grid-template-columns:1fr auto;gap:6px 12px;font-size:14px;border-top:1px solid var(--line);padding-top:12px}
 .kv dt{color:var(--muted)} .kv dd{margin:0;text-align:right;font-family:var(--f-mono);font-variant-numeric:tabular-nums}
 .chip{display:inline-block;font-size:12px;font-weight:600;padding:3px 9px;border-radius:999px;white-space:nowrap}
@@ -70,10 +74,11 @@ header .lede{max-width:68ch;color:var(--muted)}
 .bar-row .total{text-align:right;font-weight:600}
 
 .tbl{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:10px}
-table{border-collapse:collapse;width:100%;min-width:860px;font-size:14px}
+table{border-collapse:collapse;width:100%;min-width:1180px;font-size:14px}
 th,td{padding:12px 14px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
 thead th{font-family:var(--f-display);font-weight:500;font-size:14px;background:var(--accent-soft);position:sticky;top:0}
-tbody th{font-weight:600;width:170px;color:var(--ink)}
+thead th small{display:block;font-family:var(--f-body);font-size:12px;color:var(--muted);font-weight:500}
+tbody th{font-weight:600;width:150px;color:var(--ink)}
 td .num{font-weight:600}
 tr.grp th{font-family:var(--f-body);font-size:12px;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);background:var(--bg);padding-block:8px}
 td p+p{margin-top:6px}
@@ -97,14 +102,15 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 <div class="wrap">
   <header>
     <span class="eyebrow">Расчёт на 31 октября 2026</span>
-    <h1>Юрлицо в Гонконге, Бахрейне или Маниле: сколько нужно на старт</h1>
+    <h1>Юрлицо в Гонконге, Бахрейне, Маниле или ОАЭ: сколько нужно на старт</h1>
     <p class="lede">Одна компания, один сотрудник со ставкой 500 тыс. ₽ в месяц (gross), квартира с 1,5–2 спальнями. Ниже: регистрация, капитал, офис или только адрес, годовое обслуживание и сколько денег нужно на старт и на первый год.</p>
     <div class="assume">
       <span>1 $ = <b>80,5 ₽</b> (ЦБ, 26.10)</span>
       <span>1 HK$ = <b>10,3 ₽</b></span>
       <span>1 BHD = <b>214 ₽</b></span>
       <span>1 ₱ = <b>1,28 ₽</b></span>
-      <span>Сотрудник = <b>500 тыс. ₽</b> ≈ HK$48 400 / BHD 2 340 / ₱391 000</span>
+      <span>1 AED = <b>21,9 ₽</b></span>
+      <span>Сотрудник = <b>500 тыс. ₽</b> ≈ HK$48 400 / BHD 2 340 / ₱391 000 / AED 22 800</span>
     </div>
   </header>
 
@@ -113,37 +119,53 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
       <div class="top"><h3>Гонконг</h3><span class="form">Private Limited Company</span></div>
       <div><span class="eyebrow">В месяц</span><div class="big num">737 <small>тыс. ₽</small></div></div>
       <dl class="kv">
-        <dt>Старт (разовые + депозиты + 3 мес.)</dt><dd>2,85 млн ₽</dd>
-        <dt>Первый год, всего</dt><dd>9,1 млн ₽</dd>
-        <dt>Регистрация под ключ</dt><dd>83–165 тыс. ₽</dd>
-        <dt>Минимальный капитал</dt><dd>нет</dd>
+        <dt>Старт</dt><dd>2,85 млн ₽</dd>
+        <dt>Первый год</dt><dd>9,1 млн ₽</dd>
+        <dt>Регистрация</dt><dd>83–165 тыс. ₽</dd>
+        <dt>Мин. капитал</dt><dd>нет</dd>
       </dl>
       <div><span class="chip ok">Офис не нужен · хватает адреса</span></div>
       <p class="verdict muted">Самый простой и дешёвый вход, капитала нет, можно работать из дома. Дорогое жильё: за 200 тыс. ₽ в Kennedy Town будет скорее 1 спальня.</p>
     </article>
     <article class="card">
-      <div class="top"><h3>Бахрейн</h3><span class="form">WLL, 100% иностранная доля</span></div>
+      <div class="top"><h3>Бахрейн</h3><span class="form">WLL</span></div>
       <div><span class="eyebrow">В месяц</span><div class="big num">705 <small>тыс. ₽</small></div></div>
       <dl class="kv">
-        <dt>Старт (разовые + депозиты + 3 мес.)</dt><dd>2,7 млн ₽</dd>
-        <dt>Первый год, всего</dt><dd>9,0 млн ₽</dd>
-        <dt>Регистрация под ключ</dt><dd>290–640 тыс. ₽</dd>
-        <dt>Минимальный капитал</dt><dd>0 или 4,3 млн ₽ ?</dd>
+        <dt>Старт</dt><dd>2,7 млн ₽</dd>
+        <dt>Первый год</dt><dd>9,0 млн ₽</dd>
+        <dt>Регистрация</dt><dd>290–640 тыс. ₽</dd>
+        <dt>Мин. капитал</dt><dd>0 или 4,3 млн ₽ ?</dd>
       </dl>
       <div><span class="chip warn">Нужен flexi-desk в бизнес-центре</span></div>
-      <p class="verdict muted">Налогов 0%, сотрудник получает почти всю ставку, жильё дешёвое. Но нужен коммерческий адрес по договору аренды, а норму по капиталу надо подтвердить до подачи.</p>
+      <p class="verdict muted">Налогов 0%, сотрудник получает почти всю ставку, жильё дешёвое. Нужен коммерческий адрес по договору аренды, норму по капиталу надо подтвердить до подачи.</p>
     </article>
     <article class="card">
-      <div class="top"><h3>Манила</h3><span class="form">Stock corporation / OPC</span></div>
+      <div class="top"><h3>Манила</h3><span class="form">Corporation / OPC</span></div>
       <div><span class="eyebrow">В месяц</span><div class="big num">698 <small>тыс. ₽</small></div></div>
       <dl class="kv">
-        <dt>Старт (разовые + депозиты + 3 мес.)</dt><dd>2,66 млн ₽</dd>
-        <dt>Первый год, всего</dt><dd>8,7 млн ₽</dd>
-        <dt>Регистрация под ключ</dt><dd>190–450 тыс. ₽</dd>
-        <dt>Минимальный капитал</dt><dd>6 тыс. или 16,1 млн ₽</dd>
+        <dt>Старт</dt><dd>2,66 млн ₽</dd>
+        <dt>Первый год</dt><dd>8,7 млн ₽</dd>
+        <dt>Регистрация</dt><dd>190–450 тыс. ₽</dd>
+        <dt>Мин. капитал</dt><dd>6 тыс. или 16,1 млн ₽</dd>
       </dl>
-      <div><span class="chip warn">Нужен адрес в коммерческом здании</span></div>
-      <p class="verdict muted">Дёшево, только если ≥60% выручки из-за рубежа. Иначе нужен капитал $200 000. Нужен секретарь-филиппинец, подоходный налог сотрудника доходит до 35%.</p>
+      <div><span class="chip warn">Адрес в коммерческом здании</span></div>
+      <p class="verdict muted">Дёшево, только если ≥60% выручки из-за рубежа, иначе капитал $200 000. Нужен секретарь-филиппинец, подоходный налог сотрудника доходит до 35%.</p>
+    </article>
+    <article class="card">
+      <div class="top"><h3>ОАЭ</h3><span class="form">Компания во фризоне</span></div>
+      <div><span class="eyebrow">В месяц</span>
+        <div class="pair">
+          <div><span class="city">Дубай</span><span class="big num">805</span></div>
+          <div><span class="city">Абу-Даби</span><span class="big num">750</span> <small class="muted">тыс. ₽</small></div>
+        </div></div>
+      <dl class="kv">
+        <dt>Старт</dt><dd>4,0 / 3,7 млн ₽</dd>
+        <dt>Первый год</dt><dd>10,3 / 9,7 млн ₽</dd>
+        <dt>Регистрация с визой</dt><dd>395–615 тыс. ₽</dd>
+        <dt>Мин. капитал</dt><dd>нет</dd>
+      </dl>
+      <div><span class="chip ok">Flexi-desk входит в пакет</span></div>
+      <p class="verdict muted">Подоходного налога нет, лицензия с визой за 1–3 недели, работать можно из дома. Минусы: лицензию продлевают каждый год, а аренду платят чеками на полгода–год вперёд. В Абу-Даби жильё на ~20% дешевле.</p>
     </article>
   </section>
 
@@ -153,17 +175,25 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
       <p class="muted" style="font-size:14px">тыс. ₽, шкала общая. Зарплата указана с обязательными взносами работодателя.</p>
     </div>
     <div class="bar-row"><span class="name">Гонконг</span>
-      <div class="track" role="img" aria-label="Гонконг: зарплата 517, квартира 200, офис 0, обслуживание 21 тыс. ₽">
-        <i style="width:68.0%;background:var(--c-sal)"></i><i style="width:26.3%;background:var(--c-apt)"></i><i style="width:2.8%;background:var(--c-comp)"></i></div>
+      <div class="track" role="img" aria-label="Гонконг: зарплата 517, квартира 200, обслуживание 21 тыс. ₽">
+        <i style="width:63.0%;background:var(--c-sal)"></i><i style="width:24.4%;background:var(--c-apt)"></i><i style="width:2.6%;background:var(--c-comp)"></i></div>
       <span class="total num">737</span></div>
     <div class="bar-row"><span class="name">Бахрейн</span>
       <div class="track" role="img" aria-label="Бахрейн: зарплата 547, квартира 96, офис 32, обслуживание 29 тыс. ₽">
-        <i style="width:72.0%;background:var(--c-sal)"></i><i style="width:12.6%;background:var(--c-apt)"></i><i style="width:4.2%;background:var(--c-off)"></i><i style="width:3.8%;background:var(--c-comp)"></i></div>
+        <i style="width:66.7%;background:var(--c-sal)"></i><i style="width:11.7%;background:var(--c-apt)"></i><i style="width:3.9%;background:var(--c-off)"></i><i style="width:3.5%;background:var(--c-comp)"></i></div>
       <span class="total num">705</span></div>
     <div class="bar-row"><span class="name">Манила</span>
       <div class="track" role="img" aria-label="Манила: зарплата 550, квартира 115, офис 6, обслуживание 27 тыс. ₽">
-        <i style="width:72.4%;background:var(--c-sal)"></i><i style="width:15.1%;background:var(--c-apt)"></i><i style="width:0.8%;background:var(--c-off)"></i><i style="width:3.6%;background:var(--c-comp)"></i></div>
+        <i style="width:67.1%;background:var(--c-sal)"></i><i style="width:14.0%;background:var(--c-apt)"></i><i style="width:0.7%;background:var(--c-off)"></i><i style="width:3.3%;background:var(--c-comp)"></i></div>
       <span class="total num">698</span></div>
+    <div class="bar-row"><span class="name">Дубай</span>
+      <div class="track" role="img" aria-label="Дубай: зарплата 536, квартира 247, обслуживание 22 тыс. ₽">
+        <i style="width:65.4%;background:var(--c-sal)"></i><i style="width:30.1%;background:var(--c-apt)"></i><i style="width:2.7%;background:var(--c-comp)"></i></div>
+      <span class="total num">805</span></div>
+    <div class="bar-row"><span class="name">Абу-Даби</span>
+      <div class="track" role="img" aria-label="Абу-Даби: зарплата 536, квартира 192, обслуживание 22 тыс. ₽">
+        <i style="width:65.4%;background:var(--c-sal)"></i><i style="width:23.4%;background:var(--c-apt)"></i><i style="width:2.7%;background:var(--c-comp)"></i></div>
+      <span class="total num">750</span></div>
     <div class="legend">
       <span style="--c:var(--c-sal)">Зарплата + взносы</span>
       <span style="--c:var(--c-apt)">Квартира</span>
@@ -176,85 +206,106 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
     <h2>Подробно по каждой статье</h2>
     <div class="tbl">
       <table>
-        <thead><tr><th></th><th>Гонконг</th><th>Бахрейн</th><th>Манила (Makati / BGC)</th></tr></thead>
+        <thead><tr><th></th><th>Гонконг</th><th>Бахрейн</th><th>Манила<small>Makati / BGC</small></th><th>Дубай<small>фризона IFZA / Meydan</small></th><th>Абу-Даби<small>Masdar / ADGM</small></th></tr></thead>
         <tbody>
-          <tr class="grp"><th colspan="4">Открытие юрлица</th></tr>
+          <tr class="grp"><th colspan="6">Открытие юрлица</th></tr>
           <tr><th>Госпошлины</th>
             <td><p><span class="num">HK$3 895</span> ≈ 40 тыс. ₽</p><p class="muted">Регистрация онлайн HK$1 545 + Business Registration HK$2 350 (с 1.04.2026)</p></td>
             <td><p>CR через Sijilat (MOIC), зависят от вида деятельности</p><p class="muted">Продление: CR ~BHD 50 + активность ~BHD 100 в год</p></td>
-            <td><p><span class="num">₱30–60 тыс.</span> ≈ 40–75 тыс. ₽</p><p class="muted">SEC, Barangay clearance, Mayor's permit, BIR, SSS / PhilHealth / Pag-IBIG</p></td></tr>
+            <td><p><span class="num">₱30–60 тыс.</span> ≈ 40–75 тыс. ₽</p><p class="muted">SEC, Barangay clearance, Mayor's permit, BIR, SSS / PhilHealth / Pag-IBIG</p></td>
+            <td><p>Лицензия <span class="num">AED 12 500–20 000</span> в год ≈ 275–440 тыс. ₽, с квотой на визу</p><p class="muted">Виза AED 3 800–4 500 ≈ 85–100 тыс. ₽, плюс Emirates ID и медкомиссия</p></td>
+            <td><p>Masdar <span class="num">AED 12–20 тыс.</span> в год ≈ 265–440 тыс. ₽</p><p class="muted">ADGM Tech Startup ~$1 500 в год (≈ 120 тыс. ₽), но нужно место в ADGM</p></td></tr>
           <tr><th>Под ключ с агентом</th>
             <td><span class="num">HK$8–16 тыс.</span> ≈ 83–165 тыс. ₽, обычно с секретарём и адресом на 1-й год</td>
             <td><span class="num">BHD 1 340–3 000</span> ≈ 290–640 тыс. ₽</td>
-            <td><span class="num">₱150–350 тыс.</span> ≈ 190–450 тыс. ₽</td></tr>
-          <tr><th>Срок</th><td>1–2 недели (вместе с проверкой агента)</td><td>2–6 недель</td><td>1–3 месяца</td></tr>
+            <td><span class="num">₱150–350 тыс.</span> ≈ 190–450 тыс. ₽</td>
+            <td><span class="num">AED 18–28 тыс.</span> ≈ 395–615 тыс. ₽: лицензия на 1-й год + 1 виза</td>
+            <td><span class="num">AED 18–30 тыс.</span> ≈ 395–660 тыс. ₽: лицензия на 1-й год + 1 виза</td></tr>
+          <tr><th>Срок</th><td>1–2 недели</td><td>2–6 недель</td><td>1–3 месяца</td><td>1–3 недели: лицензия за несколько дней, виза ещё 2–3 недели</td><td>2–4 недели</td></tr>
           <tr><th>Обязательные лица</th>
             <td>Company secretary: резидент HK или HK-компания (агент). Директор может быть нерезидентом</td>
             <td>Директор-иностранец допускается, местный партнёр не нужен для большинства видов деятельности</td>
-            <td>Corporate secretary должен быть гражданином Филиппин, treasurer резидентом страны (оба на аутсорсе)</td></tr>
+            <td>Corporate secretary должен быть гражданином Филиппин, treasurer резидентом страны (оба на аутсорсе)</td>
+            <td colspan="2">Хватает одного акционера-директора. Местный партнёр не нужен: ни во фризоне, ни на материке (mainland) для большинства видов деятельности</td></tr>
 
-          <tr class="grp"><th colspan="4">Уставной капитал</th></tr>
+          <tr class="grp"><th colspan="6">Уставной капитал</th></tr>
           <tr><th>Минимум</th>
             <td><p><span class="chip ok">нет минимума</span></p><p>Обычно объявляют HK$10 000, вносить на счёт не обязательно</p></td>
             <td><p><span class="chip warn">уточнить</span></p><p>Раньше требовали <span class="num">BHD 20 000</span> ≈ 4,3 млн ₽. Часть источников пишет, что минимум отменён (Decree 28/2020). Подтвердить у агента до подачи</p></td>
-            <td><p><span class="chip ok">экспорт ≥60%</span> номинально ~<span class="num">₱5 000</span> ≈ 6 тыс. ₽</p><p><span class="chip crit">рынок Филиппин</span> <span class="num">$200 000</span> ≈ 16,1 млн ₽, либо $100 000 ≈ 8 млн ₽ при advanced tech, статусе стартапа или ≥15 сотрудниках-филиппинцах</p></td></tr>
+            <td><p><span class="chip ok">экспорт ≥60%</span> номинально ~<span class="num">₱5 000</span> ≈ 6 тыс. ₽</p><p><span class="chip crit">рынок Филиппин</span> <span class="num">$200 000</span> ≈ 16,1 млн ₽, либо $100 000 ≈ 8 млн ₽ при advanced tech, статусе стартапа или ≥15 сотрудниках-филиппинцах</p></td>
+            <td colspan="2"><p><span class="chip ok">нет минимума</span></p><p>Объявляют AED 10–50 тыс., вносить на счёт обычно не нужно. В DMCC объявляют AED 50 000. Для лицензируемых видов деятельности (финансы, крипта) требования отдельные</p></td></tr>
 
-          <tr class="grp"><th colspan="4">Офис или почтовый адрес</th></tr>
+          <tr class="grp"><th colspan="6">Офис или почтовый адрес</th></tr>
           <tr><th>Что требуется</th>
             <td><p><span class="chip ok">хватает адреса</span></p><p>Нужен registered office в HK: подойдёт адрес секретаря или виртуальный офис. Работать из дома можно.</p><p class="muted">Для рабочей визы через свою компанию Immigration оценивает реальное присутствие. Коворкинг за HK$2–5 тыс./мес (20–50 тыс. ₽) усиливает заявку</p></td>
-            <td><p><span class="chip warn">flexi-desk</span></p><p>Нужен коммерческий адрес с договором аренды, домашний не подходит. Отдельный офис не обязателен: хватает flexi-desk / виртуального офиса в одобренном бизнес-центре, <span class="num">BHD 100–250/мес</span> ≈ 21–54 тыс. ₽</p><p class="muted">Источники расходятся в том, принимают ли чисто виртуальный офис. Число рабочих виз LMRA привязано к помещению</p></td>
-            <td><p><span class="chip warn">виртуальный офис</span></p><p>Нужен адрес в коммерческом здании. Жилой кондо для Mayor's permit обычно не принимают. Виртуальный офис в Makati/BGC <span class="num">₱3–8 тыс./мес</span> ≈ 4–10 тыс. ₽ принимает большинство городов</p></td></tr>
+            <td><p><span class="chip warn">flexi-desk</span></p><p>Нужен коммерческий адрес с договором аренды, домашний не подходит. Хватает flexi-desk или виртуального офиса в одобренном бизнес-центре, <span class="num">BHD 100–250/мес</span> ≈ 21–54 тыс. ₽</p><p class="muted">Источники расходятся, принимают ли чисто виртуальный офис. Число рабочих виз LMRA привязано к помещению</p></td>
+            <td><p><span class="chip warn">виртуальный офис</span></p><p>Нужен адрес в коммерческом здании. Жилой кондо для Mayor's permit обычно не принимают. Виртуальный офис в Makati/BGC <span class="num">₱3–8 тыс./мес</span> ≈ 4–10 тыс. ₽ принимает большинство городов</p></td>
+            <td><p><span class="chip ok">в пакете</span></p><p>Во фризоне flexi-desk или адрес уже входит в лицензию, работать можно из дома.</p><p class="muted">На материке (DET) нужен договор Ejari: хватает бизнес-центра, AED 8–15 тыс./год ≈ 175–330 тыс. ₽. Число виз зависит от пакета</p></td>
+            <td><p><span class="chip ok">Masdar: в пакете</span></p><p>Flexi-desk входит в лицензию.</p><p><span class="chip warn">ADGM</span> нужно место на территории ADGM: коворкинг или бизнес-центр</p></td></tr>
 
-          <tr class="grp"><th colspan="4">Ежегодное обслуживание</th></tr>
+          <tr class="grp"><th colspan="6">Ежегодное обслуживание</th></tr>
           <tr><th>Секретарь, бухгалтерия, аудит</th>
             <td><p><span class="num">HK$20–40 тыс./год</span> ≈ 200–400 тыс. ₽</p><p class="muted">Аудит обязателен каждый год. Annual return HK$105, BR HK$2 350, секретарь + адрес HK$5–8 тыс.</p></td>
             <td><p><span class="num">BHD 1 400–2 100/год</span> ≈ 300–450 тыс. ₽</p><p class="muted">Аудированная отчётность, продление CR</p></td>
-            <td><p><span class="num">₱230–430 тыс./год</span> ≈ 300–550 тыс. ₽</p><p class="muted">Бухгалтерия ₱8–20 тыс./мес, аудит ₱30–80 тыс., GIS, продление Mayor's permit в январе</p></td></tr>
+            <td><p><span class="num">₱230–430 тыс./год</span> ≈ 300–550 тыс. ₽</p><p class="muted">Бухгалтерия ₱8–20 тыс./мес, аудит ₱30–80 тыс., GIS, продление Mayor's permit в январе</p></td>
+            <td colspan="2"><p>Бухгалтерия, аудит и декларация по корпоративному налогу <span class="num">AED 8–15 тыс./год</span> ≈ 175–330 тыс. ₽</p><p>Со 2-го года ещё продление лицензии <span class="num">AED 12 500–20 000</span> ≈ 275–440 тыс. ₽ и визы раз в 2 года</p></td></tr>
           <tr><th>Налог на прибыль / НДС</th>
             <td>8,25% до HK$2 млн прибыли, 16,5% сверх. НДС нет</td>
             <td>0% (кроме нефти и крупных МНК). VAT 10% при обороте > BHD 37 500</td>
-            <td>25%, или 20% если прибыль ≤ ₱5 млн и активы ≤ ₱100 млн. VAT 12%</td></tr>
+            <td>25%, или 20% если прибыль ≤ ₱5 млн и активы ≤ ₱100 млн. VAT 12%</td>
+            <td colspan="2"><p>9% с прибыли свыше AED 375 000. Во фризоне 0% на qualifying income, если есть аудит и реальное присутствие. Льгота Small Business Relief (выручка ≤ AED 3 млн) действует до периодов, заканчивающихся в 2026</p><p>VAT 5% при обороте > AED 375 000</p></td></tr>
 
-          <tr class="grp"><th colspan="4">Сотрудник на 500 тыс. ₽</th></tr>
+          <tr class="grp"><th colspan="6">Сотрудник на 500 тыс. ₽</th></tr>
           <tr><th>Сверху платит компания</th>
             <td><p><span class="num">+17 тыс. ₽/мес</span></p><p class="muted">MPF 5% с потолком HK$1 500/мес + обязательная страховка Employees' Compensation</p></td>
             <td><p><span class="num">+47 тыс. ₽/мес</span> (≈ 8%)</p><p class="muted">SIO для экспата: травматизм ~3% + безработица 1% + выходное пособие 4,2% (первые 3 года), сбор LMRA. Разрешение на работу ~BHD 200 на 2 года + медкомиссия</p></td>
-            <td><p><span class="num">+50 тыс. ₽/мес</span> (≈ 10%)</p><p class="muted">Обязательная 13-я зарплата (+8,3%) и SSS / PhilHealth / Pag-IBIG с потолками. Для иностранца: AEP + виза 9(g) ≈ ₱50–80 тыс./год</p></td></tr>
+            <td><p><span class="num">+50 тыс. ₽/мес</span> (≈ 10%)</p><p class="muted">Обязательная 13-я зарплата (+8,3%) и SSS / PhilHealth / Pag-IBIG с потолками. Для иностранца: AEP + виза 9(g) ≈ ₱50–80 тыс./год</p></td>
+            <td colspan="2"><p><span class="num">+36 тыс. ₽/мес</span> (≈ 7%)</p><p class="muted">Резерв на выходное пособие (gratuity): 21 день базовой зарплаты за год ≈ 5,75%. Обязательная медстраховка AED 1–6 тыс./год. Пенсионных взносов за иностранцев нет</p></td></tr>
           <tr><th>На руки сотруднику</th>
             <td><span class="num">≈ 435 тыс. ₽</span> (87%): подоходный ~9–10% на таком доходе + MPF</td>
             <td><span class="num">≈ 495 тыс. ₽</span> (99%): подоходного налога нет</td>
-            <td><span class="num">≈ 365 тыс. ₽</span> (73%): шкала до 35%, на таком доходе ~26%</td></tr>
+            <td><span class="num">≈ 365 тыс. ₽</span> (73%): шкала до 35%, на таком доходе ~26%</td>
+            <td colspan="2"><span class="num">≈ 500 тыс. ₽</span> (~100%): подоходного налога нет, только страховка от потери работы ILOE на несколько дирхамов в месяц</td></tr>
 
-          <tr class="grp"><th colspan="4">Квартира, 1,5–2 спальни</th></tr>
+          <tr class="grp"><th colspan="6">Квартира, 1,5–2 спальни</th></tr>
           <tr><th>Аренда в месяц</th>
             <td><p>Kennedy Town / HKU, 2 спальни, 450–550 sq ft полезной площади: <span class="num">HK$25–32 тыс.</span> ≈ 258–330 тыс. ₽</p><p><span class="chip crit">200 тыс. ₽ ≈ HK$19 400</span> хватает на 1 спальню в Kennedy Town или на 2 спальни в старом доме без лифта в Sai Ying Pun / Shek Tong Tsui</p></td>
             <td>Juffair / Seef, 2 спальни с мебелью: <span class="num">BHD 380–600</span> ≈ 81–128 тыс. ₽, коммуналка часто включена. В расчёте BHD 450 ≈ 96 тыс. ₽</td>
-            <td>BGC / Makati, 2 спальни: <span class="num">₱65–150 тыс.</span> ≈ 83–192 тыс. ₽. В расчёте ₱90 тыс. ≈ 115 тыс. ₽</td></tr>
+            <td>BGC / Makati, 2 спальни: <span class="num">₱65–150 тыс.</span> ≈ 83–192 тыс. ₽. В расчёте ₱90 тыс. ≈ 115 тыс. ₽</td>
+            <td>JLT / Marina / Business Bay, 2 спальни: <span class="num">AED 110–165 тыс. в год</span> ≈ 200–300 тыс. ₽/мес. В расчёте AED 135 тыс. ≈ 247 тыс. ₽/мес</td>
+            <td>Al Reem Island, 2 спальни: <span class="num">AED 97–115 тыс. в год</span> ≈ 177–210 тыс. ₽/мес. В расчёте AED 105 тыс. ≈ 192 тыс. ₽/мес</td></tr>
           <tr><th>При заезде</th>
             <td>Депозит 2 мес. + первый месяц + агенту 0,5 мес. ≈ 700 тыс. ₽ (400 тыс. возвратные)</td>
             <td>Депозит 1 мес. ≈ 96 тыс. ₽</td>
-            <td>Депозит 2 мес. + аванс 1 мес. ≈ 345 тыс. ₽</td></tr>
+            <td>Депозит 2 мес. + аванс 1 мес. ≈ 345 тыс. ₽</td>
+            <td><p>Аренду платят 1–4 чеками вперёд. При 2 чеках сразу ≈ <span class="num">1,48 млн ₽</span> за полгода</p><p class="muted">Плюс депозит 5%, агенту 5%, DEWA и Ejari ≈ 355 тыс. ₽</p></td>
+            <td><p>При 2 чеках сразу ≈ <span class="num">1,15 млн ₽</span> за полгода</p><p class="muted">Плюс депозит 5%, агенту, ADDC и Tawtheeq ≈ 290 тыс. ₽</p></td></tr>
 
-          <tr class="grp"><th colspan="4">Итог</th></tr>
+          <tr class="grp"><th colspan="6">Итог</th></tr>
           <tr><th>Старт</th>
             <td><span class="num">2,85 млн ₽</span></td>
             <td><span class="num">2,7 млн ₽</span><p class="muted">+4,3 млн, если требуют BHD 20 000 капитала</p></td>
-            <td><span class="num">2,66 млн ₽</span><p class="muted">+16,1 млн, если продаёте на рынок Филиппин</p></td></tr>
+            <td><span class="num">2,66 млн ₽</span><p class="muted">+16,1 млн, если продаёте на рынок Филиппин</p></td>
+            <td><span class="num">4,0 млн ₽</span><p class="muted">из них полгода аренды вперёд</p></td>
+            <td><span class="num">3,7 млн ₽</span><p class="muted">из них полгода аренды вперёд</p></td></tr>
           <tr><th>Первый год</th>
             <td><span class="num">9,1 млн ₽</span><p class="muted">≈ 9,8–10,6 млн с настоящей двушкой в Kennedy Town</p></td>
             <td><span class="num">9,0 млн ₽</span></td>
-            <td><span class="num">8,7 млн ₽</span></td></tr>
+            <td><span class="num">8,7 млн ₽</span></td>
+            <td><span class="num">10,3 млн ₽</span></td>
+            <td><span class="num">9,7 млн ₽</span></td></tr>
         </tbody>
       </table>
     </div>
-    <p class="muted" style="font-size:13px">«Старт» = регистрация + виза + расходы на заезд + капитал по минимальному сценарию + 3 месяца расходов вперёд. «Первый год» = разовые расходы + 12 месяцев, возвратные депозиты не включены.</p>
+    <p class="muted" style="font-size:13px">«Старт» = регистрация + виза + расходы на заезд + капитал по минимальному сценарию + 3 месяца расходов вперёд (в ОАЭ ещё 3 месяца аренды сверху, потому что её платят чеками). «Первый год» = разовые расходы + 12 месяцев, возвратные депозиты не включены.</p>
   </section>
 
   <section class="notes" aria-label="Риски">
-    <div class="note c"><h3>Банковский счёт с паспортом РФ</h3><p>Главный риск во всех трёх странах. Банки и необанки (Airwallex, Statrys) часто отказывают гражданам РФ. Помогают ВНЖ третьей страны, понятные зарубежные клиенты и прозрачные источники денег. Агента лучше спросить про счёт до того, как платить за регистрацию.</p></div>
+    <div class="note c"><h3>Банковский счёт с паспортом РФ</h3><p>Главный риск во всех странах, включая ОАЭ: банки там заметно ужесточили проверку российских владельцев. Помогают ВНЖ третьей страны, понятные зарубежные клиенты и прозрачные источники денег. Про счёт лучше спросить агента до того, как платить за регистрацию, и заложить 1–3 месяца на открытие.</p></div>
     <div class="note w"><h3>Капитал в Бахрейне</h3><p>Норма BHD 20 000 в одних источниках действует, в других отменена. До подачи нужно письменное подтверждение от агента или юрфирмы под ваш вид деятельности.</p></div>
     <div class="note w"><h3>Статус экспортёра на Филиппинах</h3><p>Капитал ₱5 000 возможен, только если ≥60% выручки приходит из-за рубежа. Если хотя бы часть продаж пойдёт местным клиентам, порог становится $100–200 тыс.</p></div>
-    <div class="note o"><h3>Если нужно просто работать из дома</h3><p>Только Гонконг даёт это без оговорок: адрес у секретаря, офис не нужен. В Бахрейне и Маниле нужен хотя бы минимальный коммерческий адрес по договору.</p></div>
+    <div class="note w"><h3>Деньги вперёд в ОАЭ</h3><p>Лицензию оплачивают за год вперёд, аренду обычно на 6–12 месяцев. Помесячно можно снять через сервисы вроде Blueground, но это дороже.</p></div>
+    <div class="note o"><h3>Если нужно просто работать из дома</h3><p>Это без оговорок возможно в Гонконге (адрес у секретаря) и во фризонах ОАЭ (flexi-desk входит в лицензию). В Бахрейне и Маниле нужен хотя бы минимальный коммерческий адрес по договору.</p></div>
   </section>
 
   <footer class="src">
@@ -275,6 +326,12 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
       <li><a href="https://ndvlaw.com/domestic-market-enterprise-vs-export-enterprise-in-the-philippines-foreign-investments-act-60-export-threshold-and-foreign-investor-capital-rules/">Филиппины: порог экспорта 60% (NDV Law)</a></li>
       <li><a href="https://emerhub.com/philippines/cost-of-company-setup-in-the-philippines/">Филиппины: стоимость открытия (Emerhub)</a></li>
       <li><a href="https://homes.trovit.ph/for-rent-2-bedroom-condominium-makati/20">Makati: аренда двушек (Trovit)</a></li>
+      <li><a href="https://avyanco.com/meydan-free-zone-cost/">Дубай: стоимость Meydan, июль 2026 (Avyanco)</a></li>
+      <li><a href="https://www.vjmglobal.com/feeds/blog/dubai-freezone-company-setup-cost">Дубай: стоимость фризон 2026 (VJM Global)</a></li>
+      <li><a href="https://www.bayut.com/to-rent/2-bedroom-apartments/dubai/jumeirah-lake-towers-jlt/jlt-cluster-b/">Дубай: аренда двушек в JLT (Bayut)</a></li>
+      <li><a href="https://ybcase.com/en/fintech/polucit-innovacionnuu-licenziu-v-adgm">Абу-Даби: ADGM Tech Startup License</a></li>
+      <li><a href="https://uppersetup.com/ru/blog/masdar-city-free-zone-2026-a-complete-breakdown-of-abu">Абу-Даби: Masdar City 2026 (UpperSetup)</a></li>
+      <li><a href="https://www.dubizzle.com/property-for-rent/residential/apartmentflat/2026/7/30/stunning-sea-view-prime-location-rent-n-3-225808/">Абу-Даби: аренда на Al Reem (Dubizzle)</a></li>
     </ul>
   </footer>
 </div>
