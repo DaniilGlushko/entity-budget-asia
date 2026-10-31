@@ -5,3 +5,5 @@
 **Открыть страницу:** https://daniilglushko.github.io/entity-budget-asia/
 
 Чтобы открыть без интернета: скачайте `index.html` (Code → Download ZIP) и откройте в браузере.
+
+**PDF для пересылки:** https://daniilglushko.github.io/entity-budget-asia/entity-budget.pdf
