@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Onest:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
 <style>
-/* Layout: заголовок с допущениями → четыре карточки-итога → полосы «в месяц» → подробная таблица → риски → источники */
+/* Layout: заголовок с допущениями → две схемы торговли → карточки-итоги → полосы «в месяц» → подробная таблица → риски → источники */
 :root{
   --bg:#F3F5F4; --surface:#FFFFFF; --ink:#15212B; --muted:#5B6870; --line:#D9E0E1;
   --accent:#0E6B6B; --accent-soft:#DCEDEC;
@@ -43,10 +43,13 @@ p{margin:0}
 .eyebrow{font-size:12px;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);font-weight:600}
 
 header{display:grid;gap:14px}
-header .lede{max-width:68ch;color:var(--muted)}
+header .lede{max-width:72ch;color:var(--muted)}
 .assume{display:flex;flex-wrap:wrap;gap:8px}
 .assume span{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:4px 10px;font-size:13px}
 .assume b{font-family:var(--f-mono);font-weight:600}
+
+.models{display:grid;gap:12px}
+.models .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
 
 .cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
 .card.wide{grid-column:span 2}
@@ -62,6 +65,8 @@ header .lede{max-width:68ch;color:var(--muted)}
 .pair .city{display:block;font-size:12px;color:var(--muted);margin-bottom:4px}
 .kv{display:grid;grid-template-columns:1fr auto;gap:6px 12px;font-size:14px;border-top:1px solid var(--line);padding-top:12px}
 .kv dt{color:var(--muted)} .kv dd{margin:0;text-align:right;font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.kv dd.txt{font-family:var(--f-body);font-size:13px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
 .chip{display:inline-block;font-size:12px;font-weight:600;padding:3px 9px;border-radius:999px;white-space:nowrap}
 .ok{background:var(--ok-bg);color:var(--ok)} .warn{background:var(--warn-bg);color:var(--warn)} .crit{background:var(--crit-bg);color:var(--crit)}
 .verdict{font-size:14px}
@@ -85,7 +90,7 @@ tr.grp th{font-family:var(--f-body);font-size:12px;text-transform:uppercase;lett
 td p+p{margin-top:6px}
 
 .notes{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
-.note{border-left:3px solid var(--line);padding:4px 0 4px 14px;display:grid;gap:6px;min-width:0}
+.note{border-left:3px solid var(--line);padding:4px 0 4px 14px;display:grid;gap:6px;min-width:0;align-content:start}
 .note.w{border-color:var(--warn)} .note.c{border-color:var(--crit)} .note.o{border-color:var(--ok)}
 .note h3{font-family:var(--f-body);font-size:15px;font-weight:600}
 .note p{font-size:14px;color:var(--muted)}
@@ -96,74 +101,95 @@ td p+p{margin-top:6px}
 a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
 @media (max-width:560px){.bar-row{grid-template-columns:1fr 70px}.bar-row .name{grid-column:1/-1}.big{font-size:28px}}
+@media print{
+  /* cards first so page 1 isn't half empty; the schemes go right after them */
+  .wrap{display:flex!important;flex-direction:column} .wrap>*{order:3} .wrap>header{order:0} .wrap>.cards{order:1} .wrap>.models{order:2}
+  .models{gap:4px} .models .grid{gap:10px} .models h3{font-size:12px} .models .note p{font-size:9.5px;line-height:1.35}
+  .kv dd.txt{font-size:10px}
+  section.table-sec>p{font-size:9.5px!important}
+  footer.src{break-inside:avoid}
+}
 </style>
 </head>
 <body>
 
 <div class="wrap">
   <header>
-    <span class="eyebrow">Расчёт на 31 октября 2026</span>
-    <h1>Юрлицо в Гонконге, Бахрейне, Маниле, Сингапуре или ОАЭ: сколько нужно на старт</h1>
-    <p class="lede">Одна компания, один сотрудник со ставкой 500 тыс. ₽ в месяц (gross), квартира с 1,5–2 спальнями. Ниже: регистрация, капитал, офис или только адрес, годовое обслуживание и сколько денег нужно на старт и на первый год.</p>
+    <span class="eyebrow">Расчёт на 1 ноября 2026</span>
+    <h1>Торговая компания в Гонконге, Бахрейне, Маниле, Сингапуре или ОАЭ: сколько нужно на старт</h1>
+    <p class="lede">Компания покупает в России мясо и корма и продаёт их оптом местным компаниям или дальше в регион. Один сотрудник — сам основатель, который переезжает по рабочей визе своей компании, — со ставкой 500 тыс. ₽ в месяц (gross), квартира с 1,5–2 спальнями. Расчёт на одного человека, без семьи. Ниже: регистрация, капитал, офис, пускают ли российское мясо и корма, пошлины, виза для жизни, обслуживание и сколько денег нужно на старт и на первый год.</p>
     <div class="assume">
-      <span>1 $ = <b>80,5 ₽</b> (ЦБ, 26.10)</span>
-      <span>1 HK$ = <b>10,3 ₽</b></span>
+      <span>1 $ = <b>80,6 ₽</b> (ЦБ, 31.10)</span>
+      <span>1 HK$ = <b>10,27 ₽</b></span>
       <span>1 BHD = <b>214 ₽</b></span>
-      <span>1 ₱ = <b>1,28 ₽</b></span>
-      <span>1 S$ = <b>62,9 ₽</b></span>
+      <span>1 ₱ = <b>1,265 ₽</b></span>
+      <span>1 S$ = <b>63,0 ₽</b></span>
       <span>1 AED = <b>21,9 ₽</b></span>
-      <span>Сотрудник = <b>500 тыс. ₽</b> ≈ HK$48 400 / BHD 2 340 / ₱391 000 / S$7 950 / AED 22 800</span>
+      <span>Сотрудник = <b>500 тыс. ₽</b> ≈ HK$48 700 / BHD 2 330 / ₱395 000 / S$7 930 / AED 22 800</span>
     </div>
   </header>
+
+  <section class="models" aria-label="Две схемы торговли">
+    <h2>Две схемы торговли</h2>
+    <div class="grid">
+      <div class="note o"><h3>А. Трейдер без склада (в расчёте)</h3><p>Компания покупает у российского завода и перепродаёт местному импортёру или в третью страну. Ввозит товар покупатель: у него лицензии, разрешения на каждую партию и склад. Компании хватает адреса или flexi-desk.</p></div>
+      <div class="note w"><h3>Б. Свой импорт и склад</h3><p>Компания сама ввозит партии и держит товар в холодильнике логистического оператора. Нужны лицензия импортёра, разрешение на каждую партию и договор со складом, на Филиппинах оплаченный капитал от ₱5 млн (входит в $200 000). Склад, пошлины и сборы за партии зависят от объёмов и в расчёт не входят.</p></div>
+      <div class="note"><h3>В обеих схемах</h3><p>Страна должна быть открыта для этого вида мяса из России, а конкретный завод — стоять в её списке (реестр «Цербер» Россельхознадзора). Партия идёт с ветсертификатом формы для этой страны, в Бахрейн и ОАЭ ещё с халяль-сертификатом признанного органа. На зерно, шрот и жмых в России действуют плавающие экспортные пошлины и сезонные квоты: их платит поставщик, они входят в цену.</p></div>
+    </div>
+  </section>
 
   <section class="cards" aria-label="Итоги по странам">
     <article class="card">
       <div class="top"><h3>Гонконг</h3><span class="form">Private Limited Company</span></div>
       <div><span class="eyebrow">В месяц</span><div class="big num">737 <small>тыс. ₽</small></div></div>
       <dl class="kv">
-        <dt>Старт</dt><dd>2,85 млн ₽</dd>
+        <dt>Старт</dt><dd>2,86 млн ₽</dd>
         <dt>Первый год</dt><dd>9,1 млн ₽</dd>
-        <dt>Регистрация</dt><dd>83–165 тыс. ₽</dd>
+        <dt>Регистрация</dt><dd>82–165 тыс. ₽</dd>
         <dt>Мин. капитал</dt><dd>нет</dd>
+        <dt>Мясо из РФ</dt><dd class="txt">говядина, свинина, птица</dd>
       </dl>
-      <div><span class="chip ok">Офис не нужен · хватает адреса</span></div>
-      <p class="verdict muted">Самый простой и дешёвый вход, капитала нет, можно работать из дома. Дорогое жильё: за 200 тыс. ₽ в Kennedy Town будет скорее 1 спальня.</p>
+      <div class="chips"><span class="chip ok">Офис не нужен · хватает адреса</span><span class="chip crit">Виза через свою компанию: трудно</span></div>
+      <p class="verdict muted">Пошлин и НДС нет, российское мясо пускают, регистрация импортёра HK$195. Но виза предпринимателя для новой торговой компании без истории почти не даётся: реальнее Top Talent Pass при доходе от HK$2,5 млн или дипломе МГУ со стажем от 3 лет. Крупные банки отказывают в платежах в Россию. В расчёте аренда 200 тыс. ₽ — это 1 спальня; с современной двушкой месяц ≈ 795–900 тыс. ₽.</p>
     </article>
     <article class="card">
       <div class="top"><h3>Бахрейн</h3><span class="form">WLL</span></div>
-      <div><span class="eyebrow">В месяц</span><div class="big num">705 <small>тыс. ₽</small></div></div>
+      <div><span class="eyebrow">В месяц</span><div class="big num">696 <small>тыс. ₽</small></div></div>
       <dl class="kv">
         <dt>Старт</dt><dd>2,7 млн ₽</dd>
-        <dt>Первый год</dt><dd>9,0 млн ₽</dd>
+        <dt>Первый год</dt><dd>8,9 млн ₽</dd>
         <dt>Регистрация</dt><dd>290–640 тыс. ₽</dd>
-        <dt>Мин. капитал</dt><dd>0 или 4,3 млн ₽ ?</dd>
+        <dt>Мин. капитал</dt><dd>нет</dd>
+        <dt>Мясо из РФ</dt><dd class="txt">птица, остальное уточнить</dd>
       </dl>
-      <div><span class="chip warn">Нужен flexi-desk в бизнес-центре</span></div>
-      <p class="verdict muted">Налогов 0%, сотрудник получает почти всю ставку, жильё дешёвое. Нужен коммерческий адрес по договору аренды, норму по капиталу надо подтвердить до подачи.</p>
+      <div class="chips"><span class="chip crit">Нужен партнёр-бахрейнец</span><span class="chip warn">Flexi-desk</span><span class="chip warn">Виза: разрешение LMRA</span></div>
+      <p class="verdict muted">Налога на прибыль и подоходного 0% (VAT 10%), сотрудник получает почти всю ставку, жильё дешёвое. Но торговля продуктами и кормами без бахрейнского партнёра невозможна (хватает символической доли), пошлина 5%, халяль только от органа, аккредитованного в GCC.</p>
     </article>
     <article class="card">
       <div class="top"><h3>Манила</h3><span class="form">Corporation / OPC</span></div>
-      <div><span class="eyebrow">В месяц</span><div class="big num">698 <small>тыс. ₽</small></div></div>
+      <div><span class="eyebrow">В месяц</span><div class="big num">708 <small>тыс. ₽</small></div></div>
       <dl class="kv">
-        <dt>Старт</dt><dd>2,66 млн ₽</dd>
-        <dt>Первый год</dt><dd>8,7 млн ₽</dd>
-        <dt>Регистрация</dt><dd>190–450 тыс. ₽</dd>
-        <dt>Мин. капитал</dt><dd>6 тыс. или 16,1 млн ₽</dd>
+        <dt>Старт</dt><dd>19,0 млн ₽</dd>
+        <dt>Первый год</dt><dd>9,0 млн ₽ без капитала</dd>
+        <dt>Регистрация</dt><dd>355–630 тыс. ₽</dd>
+        <dt>Мин. капитал</dt><dd>$200 000 ≈ 16,1 млн ₽</dd>
+        <dt>Мясо из РФ</dt><dd class="txt">говядина, свинина, птица</dd>
       </dl>
-      <div><span class="chip warn">Адрес в коммерческом здании</span></div>
-      <p class="verdict muted">Дёшево, только если ≥60% выручки из-за рубежа, иначе капитал $200 000. Нужен секретарь-филиппинец, подоходный налог сотрудника доходит до 35%.</p>
+      <div class="chips"><span class="chip crit">Капитал $200 000</span><span class="chip warn">Адрес в коммерческом здании</span><span class="chip ok">Виза 9(g): реально</span></div>
+      <p class="verdict muted">Самый открытый рынок для российского мяса, замороженное мясо и корма для скота ввозятся без НДС. Но продажа на местный рынок требует капитала $200 000, импортёру мяса нужен ещё холодильный склад, пошлина на курицу 40%.</p>
     </article>
     <article class="card">
       <div class="top"><h3>Сингапур</h3><span class="form">Pte Ltd</span></div>
       <div><span class="eyebrow">В месяц</span><div class="big num">879 <small>тыс. ₽</small></div></div>
       <dl class="kv">
-        <dt>Старт</dt><dd>3,65 млн ₽</dd>
+        <dt>Старт</dt><dd>3,68 млн ₽</dd>
         <dt>Первый год</dt><dd>10,9 млн ₽</dd>
         <dt>Регистрация</dt><dd>190–380 тыс. ₽</dd>
         <dt>Мин. капитал</dt><dd>S$1</dd>
+        <dt>Мясо из РФ</dt><dd class="txt">птица, переработанная свинина</dd>
       </dl>
-      <div><span class="chip ok">Офис не нужен · хватает адреса</span></div>
-      <p class="verdict muted">Регистрация за 1–3 дня, капитал S$1, налоги низкие. Но нужен директор-резидент (номинальный, пока нет своей визы), и жильё здесь самое дорогое в сравнении.</p>
+      <div class="chips"><span class="chip ok">Офис не нужен · хватает адреса</span><span class="chip warn">Виза EP: до ~33 лет, с 2027 — до 30</span></div>
+      <p class="verdict muted">Регистрация за 1–3 дня, пошлин на еду нет. Но российскую говядину и замороженную свинину не пускают, Сингапур в «недружественном» списке России, банки отказывают в российских платежах, а жильё самое дорогое.</p>
     </article>
     <article class="card wide">
       <div class="top"><h3>ОАЭ</h3><span class="form">Компания во фризоне</span></div>
@@ -173,36 +199,37 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
           <div><span class="city">Абу-Даби</span><span class="big num">750</span> <small class="muted">тыс. ₽</small></div>
         </div></div>
       <dl class="kv">
-        <dt>Старт</dt><dd>4,0 / 3,7 млн ₽</dd>
-        <dt>Первый год</dt><dd>10,3 / 9,7 млн ₽</dd>
-        <dt>Регистрация с визой</dt><dd>395–615 тыс. ₽</dd>
+        <dt>Старт</dt><dd>4,1 / 3,7 млн ₽</dd>
+        <dt>Первый год</dt><dd>10,4 / 9,7 млн ₽</dd>
+        <dt>Регистрация с визой</dt><dd>550–660 тыс. ₽</dd>
         <dt>Мин. капитал</dt><dd>нет</dd>
+        <dt>Мясо из РФ</dt><dd class="txt">говядина, баранина, птица (халяль)</dd>
       </dl>
-      <div><span class="chip ok">Flexi-desk входит в пакет</span></div>
-      <p class="verdict muted">Подоходного налога нет, лицензия с визой за 1–3 недели, работать можно из дома. Минусы: лицензию продлевают каждый год, а аренду платят чеками на полгода–год вперёд. В Абу-Даби жильё на ~20% дешевле.</p>
+      <div class="chips"><span class="chip ok">Flexi-desk входит в пакет</span><span class="chip ok">Виза через свою компанию: реально</span></div>
+      <p class="verdict muted">Виза инвестора за 4–8 недель, подоходного налога нет, с 6.10.2026 действует соглашение ЕАЭС–ОАЭ об экономическом партнёрстве (льготные пошлины, в том числе на мясо). Налог на прибыль 0% до конца 2029 года при выручке до AED 3 млн, дальше 9% с прибыли свыше AED 375 000 (0% фризоны для торговли реален только в Designated Zone: JAFZA, DAFZA, KEZAD и др.). Аренду платят чеками вперёд, банки проверяют российские платежи жёстко.</p>
     </article>
   </section>
 
   <section class="bars" aria-label="Из чего складываются расходы в месяц">
     <div style="display:grid;gap:6px">
       <h2>Из чего складывается месяц</h2>
-      <p class="muted" style="font-size:14px">тыс. ₽, шкала общая. Зарплата указана с обязательными взносами работодателя.</p>
+      <p class="muted" style="font-size:14px">тыс. ₽, шкала общая. Зарплата указана с обязательными взносами работодателя. Склад, пошлины и сборы за партии не включены.</p>
     </div>
     <div class="bar-row"><span class="name">Гонконг</span>
-      <div class="track" role="img" aria-label="Гонконг: зарплата 517, квартира 200, обслуживание 21 тыс. ₽">
+      <div class="track" role="img" aria-label="Гонконг: зарплата 516, квартира 200, обслуживание 21 тыс. ₽">
         <i style="width:57.6%;background:var(--c-sal)"></i><i style="width:22.3%;background:var(--c-apt)"></i><i style="width:2.3%;background:var(--c-comp)"></i></div>
       <span class="total num">737</span></div>
     <div class="bar-row"><span class="name">Бахрейн</span>
-      <div class="track" role="img" aria-label="Бахрейн: зарплата 547, квартира 96, офис 32, обслуживание 29 тыс. ₽">
-        <i style="width:61.1%;background:var(--c-sal)"></i><i style="width:10.7%;background:var(--c-apt)"></i><i style="width:3.6%;background:var(--c-off)"></i><i style="width:3.3%;background:var(--c-comp)"></i></div>
-      <span class="total num">705</span></div>
+      <div class="track" role="img" aria-label="Бахрейн: зарплата 538, квартира 96, офис 32, обслуживание 29 тыс. ₽">
+        <i style="width:60.0%;background:var(--c-sal)"></i><i style="width:10.7%;background:var(--c-apt)"></i><i style="width:3.6%;background:var(--c-off)"></i><i style="width:3.3%;background:var(--c-comp)"></i></div>
+      <span class="total num">696</span></div>
     <div class="bar-row"><span class="name">Манила</span>
-      <div class="track" role="img" aria-label="Манила: зарплата 550, квартира 115, офис 6, обслуживание 27 тыс. ₽">
-        <i style="width:61.3%;background:var(--c-sal)"></i><i style="width:12.8%;background:var(--c-apt)"></i><i style="width:0.7%;background:var(--c-off)"></i><i style="width:3.0%;background:var(--c-comp)"></i></div>
-      <span class="total num">698</span></div>
+      <div class="track" role="img" aria-label="Манила: зарплата 549, квартира 120, офис 6, обслуживание 32 тыс. ₽">
+        <i style="width:61.3%;background:var(--c-sal)"></i><i style="width:13.4%;background:var(--c-apt)"></i><i style="width:0.7%;background:var(--c-off)"></i><i style="width:3.5%;background:var(--c-comp)"></i></div>
+      <span class="total num">708</span></div>
     <div class="bar-row"><span class="name">Сингапур</span>
-      <div class="track" role="img" aria-label="Сингапур: зарплата 504, квартира 346, обслуживание 29 тыс. ₽">
-        <i style="width:56.2%;background:var(--c-sal)"></i><i style="width:38.6%;background:var(--c-apt)"></i><i style="width:3.2%;background:var(--c-comp)"></i></div>
+      <div class="track" role="img" aria-label="Сингапур: зарплата 504, квартира 347, обслуживание 29 тыс. ₽">
+        <i style="width:56.2%;background:var(--c-sal)"></i><i style="width:38.7%;background:var(--c-apt)"></i><i style="width:3.2%;background:var(--c-comp)"></i></div>
       <span class="total num">879</span></div>
     <div class="bar-row"><span class="name">Дубай</span>
       <div class="track" role="img" aria-label="Дубай: зарплата 536, квартира 247, обслуживание 22 тыс. ₽">
@@ -224,71 +251,134 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
     <h2>Подробно по каждой статье</h2>
     <div class="tbl">
       <table>
-        <thead><tr><th></th><th>Гонконг</th><th>Бахрейн</th><th>Манила<small>Makati / BGC</small></th><th>Сингапур<small>Pte Ltd</small></th><th>Дубай<small>фризона IFZA / Meydan</small></th><th>Абу-Даби<small>Masdar / ADGM</small></th></tr></thead>
+        <thead><tr><th></th><th>Гонконг</th><th>Бахрейн</th><th>Манила<small>Makati / BGC</small></th><th>Сингапур<small>Pte Ltd</small></th><th>Дубай<small>фризона IFZA / Meydan</small></th><th>Абу-Даби<small>Masdar / KEZAD</small></th></tr></thead>
         <tbody>
           <tr class="grp"><th colspan="7">Открытие юрлица</th></tr>
           <tr><th>Госпошлины</th>
             <td><p><span class="num">HK$3 895</span> ≈ 40 тыс. ₽</p><p class="muted">Регистрация онлайн HK$1 545 + Business Registration HK$2 350 (с 1.04.2026)</p></td>
-            <td><p>CR через Sijilat (MOIC), зависят от вида деятельности</p><p class="muted">Продление: CR ~BHD 50 + активность ~BHD 100 в год</p></td>
-            <td><p><span class="num">₱30–60 тыс.</span> ≈ 40–75 тыс. ₽</p><p class="muted">SEC, Barangay clearance, Mayor's permit, BIR, SSS / PhilHealth / Pag-IBIG</p></td>
+            <td><p>CR через Sijilat (MOIC), зависят от вида деятельности</p><p class="muted">Продление: CR ~BHD 50 + виды деятельности ~BHD 100 в год</p></td>
+            <td><p><span class="num">₱130–150 тыс.</span> ≈ 165–190 тыс. ₽</p><p class="muted">Гербовый сбор 0,75% от номинала капитала (≈ ₱96 тыс. на $200 000), SEC ≈ ₱26 тыс., разрешения мэрии, BIR</p></td>
             <td><p>ACRA <span class="num">S$315</span> ≈ 20 тыс. ₽</p><p class="muted">Имя S$15 + регистрация S$300, онлайн через BizFile+</p></td>
-            <td><p>Лицензия <span class="num">AED 12 500–20 000</span> в год ≈ 275–440 тыс. ₽, с квотой на визу</p><p class="muted">Виза AED 3 800–4 500 ≈ 85–100 тыс. ₽, плюс Emirates ID и медкомиссия</p></td>
-            <td><p>Masdar <span class="num">AED 12–20 тыс.</span> в год ≈ 265–440 тыс. ₽</p><p class="muted">ADGM Tech Startup ~$1 500 в год (≈ 120 тыс. ₽), но нужно место в ADGM</p></td></tr>
+            <td><p>Торговая лицензия IFZA <span class="num">≈ AED 12 900</span> + иммиграционная карта ≈ AED 2 000 ≈ 330 тыс. ₽</p><p class="muted">Meydan от AED 12 500. DMCC от AED 20 285 + обязательный flexi-desk AED 16–19 тыс. Виза AED 3 800–4 500, плюс Emirates ID и медкомиссия</p></td>
+            <td><p>Masdar: лицензия <span class="num">AED 7–27 тыс.</span> по тарифу + flexi-desk AED 2–10 тыс. (1–3 визы)</p><p class="muted">Для схемы Б с 0% налога — KEZAD (Khalifa): там нужен реальный склад или офис</p></td></tr>
           <tr><th>Под ключ с агентом</th>
-            <td><span class="num">HK$8–16 тыс.</span> ≈ 83–165 тыс. ₽, обычно с секретарём и адресом на 1-й год</td>
-            <td><span class="num">BHD 1 340–3 000</span> ≈ 290–640 тыс. ₽</td>
-            <td><span class="num">₱150–350 тыс.</span> ≈ 190–450 тыс. ₽</td>
+            <td><span class="num">HK$8–16 тыс.</span> ≈ 82–165 тыс. ₽, обычно с секретарём и адресом на 1-й год</td>
+            <td><p><span class="num">BHD 1 340–3 000</span> ≈ 290–640 тыс. ₽</p><p class="muted">Плюс вознаграждение партнёру-бахрейнцу, по договорённости</p></td>
+            <td><span class="num">₱280–500 тыс.</span> ≈ 355–630 тыс. ₽ с госпошлинами</td>
             <td><span class="num">S$3–6 тыс.</span> ≈ 190–380 тыс. ₽ на 1-й год: секретарь, адрес и номинальный директор</td>
-            <td><span class="num">AED 18–28 тыс.</span> ≈ 395–615 тыс. ₽: лицензия на 1-й год + 1 виза</td>
-            <td><span class="num">AED 18–30 тыс.</span> ≈ 395–660 тыс. ₽: лицензия на 1-й год + 1 виза</td></tr>
-          <tr><th>Срок</th><td>1–2 недели</td><td>2–6 недель</td><td>1–3 месяца</td><td>1–3 дня на регистрацию, Employment Pass ещё 3–8 недель</td><td>1–3 недели: лицензия за несколько дней, виза ещё 2–3 недели</td><td>2–4 недели</td></tr>
+            <td colspan="2"><span class="num">AED 25–30 тыс.</span> ≈ 550–660 тыс. ₽: торговая лицензия на 1-й год + 1 виза</td></tr>
+          <tr><th>Срок</th><td>1–2 недели</td><td>2–6 недель</td><td>1–3 месяца; в схеме Б ещё 1–3 месяца на лицензии NMIS, BAI и таможни</td><td>1–3 дня на регистрацию, Employment Pass ещё 2–8 недель</td><td colspan="2">1–2 недели на лицензию, виза ещё 3–5 недель</td></tr>
           <tr><th>Обязательные лица</th>
             <td>Company secretary: резидент HK или HK-компания (агент). Директор может быть нерезидентом</td>
-            <td>Директор-иностранец допускается, местный партнёр не нужен для большинства видов деятельности</td>
+            <td><p><span class="chip crit">партнёр-бахрейнец</span></p><p>Торговля продуктами, кормами и агросырьём, комиссионная торговля и корм для питомцев (коды 469-2, 4721-1, 46201, 461, 477341) входят в Список 3 Решения 40/2021: нужен бахрейнский партнёр, долю определяют сами, хватает символической</p><p class="muted">100% без партнёра — только при капитале от BHD 100 000, материнской компании с выручкой от €750 млн и присутствии на 10 рынках. Склад и реэкспортная логистика разрешены без партнёра</p></td>
             <td>Corporate secretary должен быть гражданином Филиппин, treasurer резидентом страны (оба на аутсорсе)</td>
-            <td>Нужен директор-резидент Сингапура. Пока нет своей визы, это номинальный директор: S$2–5 тыс./год + залог. Секретарь обязателен в течение 6 месяцев</td>
-            <td colspan="2">Хватает одного акционера-директора. Местный партнёр не нужен: ни во фризоне, ни на материке (mainland) для большинства видов деятельности</td></tr>
+            <td>Нужен директор-резидент Сингапура. Пока нет своего Employment Pass, это номинальный директор: S$2–5 тыс./год + залог. Секретарь обязателен в течение 6 месяцев</td>
+            <td colspan="2">Хватает одного акционера-директора. Местный партнёр не нужен ни во фризоне, ни на материке (mainland)</td></tr>
 
           <tr class="grp"><th colspan="7">Уставной капитал</th></tr>
           <tr><th>Минимум</th>
             <td><p><span class="chip ok">нет минимума</span></p><p>Обычно объявляют HK$10 000, вносить на счёт не обязательно</p></td>
-            <td><p><span class="chip warn">уточнить</span></p><p>Раньше требовали <span class="num">BHD 20 000</span> ≈ 4,3 млн ₽. Часть источников пишет, что минимум отменён (Decree 28/2020). Подтвердить у агента до подачи</p></td>
-            <td><p><span class="chip ok">экспорт ≥60%</span> номинально ~<span class="num">₱5 000</span> ≈ 6 тыс. ₽</p><p><span class="chip crit">рынок Филиппин</span> <span class="num">$200 000</span> ≈ 16,1 млн ₽, либо $100 000 ≈ 8 млн ₽ при advanced tech, статусе стартапа или ≥15 сотрудниках-филиппинцах</p></td>
-            <td><p><span class="chip ok">S$1</span></p><p>Капитал от S$1 ≈ 63 ₽, вносится при регистрации. Для визы и банка полезно показать на счёте рабочие деньги</p></td>
-            <td colspan="2"><p><span class="chip ok">нет минимума</span></p><p>Объявляют AED 10–50 тыс., вносить на счёт обычно не нужно. В DMCC объявляют AED 50 000. Для лицензируемых видов деятельности (финансы, крипта) требования отдельные</p></td></tr>
+            <td><p><span class="chip ok">нет минимума</span></p><p>Сумму задают партнёры («достаточную для целей»), её вносят в бахрейнский банк до регистрации. Норма BHD 20 000 отменена ещё в 2014 году</p></td>
+            <td><p><span class="chip crit">$200 000</span> ≈ 16,1 млн ₽</p><p>Продажа на местный рынок делает компанию domestic market enterprise. $100 000 ≈ 8,1 млн ₽, если большинство из ≥15 сотрудников филиппинцы, или для стартапа и advanced tech</p><p class="muted">Импортёру мяса NMIS требует ещё ₱5 млн оплаченного капитала (в $200 000 укладывается)</p></td>
+            <td><p><span class="chip ok">S$1</span></p><p>Капитал от S$1 ≈ 63 ₽. Для визы и банка полезно показать на счёте рабочие деньги</p></td>
+            <td colspan="2"><p><span class="chip ok">нет минимума</span></p><p>Объявляют AED 10–50 тыс., вносить на счёт обычно не нужно. В DMCC объявляют AED 50 000</p></td></tr>
 
           <tr class="grp"><th colspan="7">Офис или почтовый адрес</th></tr>
           <tr><th>Что требуется</th>
-            <td><p><span class="chip ok">хватает адреса</span></p><p>Нужен registered office в HK: подойдёт адрес секретаря или виртуальный офис. Работать из дома можно.</p><p class="muted">Для рабочей визы через свою компанию Immigration оценивает реальное присутствие. Коворкинг за HK$2–5 тыс./мес (20–50 тыс. ₽) усиливает заявку</p></td>
-            <td><p><span class="chip warn">flexi-desk</span></p><p>Нужен коммерческий адрес с договором аренды, домашний не подходит. Хватает flexi-desk или виртуального офиса в одобренном бизнес-центре, <span class="num">BHD 100–250/мес</span> ≈ 21–54 тыс. ₽</p><p class="muted">Источники расходятся, принимают ли чисто виртуальный офис. Число рабочих виз LMRA привязано к помещению</p></td>
-            <td><p><span class="chip warn">виртуальный офис</span></p><p>Нужен адрес в коммерческом здании. Жилой кондо для Mayor's permit обычно не принимают. Виртуальный офис в Makati/BGC <span class="num">₱3–8 тыс./мес</span> ≈ 4–10 тыс. ₽ принимает большинство городов</p></td>
-            <td><p><span class="chip ok">хватает адреса</span></p><p>Нужен физический адрес в Сингапуре, не абонентский ящик: подходит адрес секретаря, обычно он в пакете. Работать из дома можно, домашний адрес регистрируют по Home Office Scheme</p><p class="muted">Офис для Employment Pass не обязателен, но MOM оценивает компанию по шкале COMPASS</p></td>
-            <td><p><span class="chip ok">в пакете</span></p><p>Во фризоне flexi-desk или адрес уже входит в лицензию, работать можно из дома.</p><p class="muted">На материке (DET) нужен договор Ejari: хватает бизнес-центра, AED 8–15 тыс./год ≈ 175–330 тыс. ₽. Число виз зависит от пакета</p></td>
-            <td><p><span class="chip ok">Masdar: в пакете</span></p><p>Flexi-desk входит в лицензию.</p><p><span class="chip warn">ADGM</span> нужно место на территории ADGM: коворкинг или бизнес-центр</p></td></tr>
+            <td><p><span class="chip ok">хватает адреса</span></p><p>Registered office в HK: адрес секретаря или виртуальный офис.</p><p class="muted">Для визы через свою компанию Immigration смотрит на реальное присутствие: коворкинг HK$2–5 тыс./мес (20–50 тыс. ₽) и местные сотрудники повышают шансы</p></td>
+            <td><p><span class="chip warn">flexi-desk</span></p><p>Нужен коммерческий адрес с договором аренды, домашний не подходит. Хватает flexi-desk в одобренном бизнес-центре, <span class="num">BHD 100–250/мес</span> ≈ 21–54 тыс. ₽</p><p class="muted">Число рабочих виз LMRA привязано к помещению</p></td>
+            <td><p><span class="chip warn">виртуальный офис</span></p><p>Нужен адрес в коммерческом здании, жилой кондо для Mayor's permit не принимают. Виртуальный офис в Makati/BGC <span class="num">₱3–8 тыс./мес</span> ≈ 4–10 тыс. ₽ — для схемы А</p></td>
+            <td><p><span class="chip ok">хватает адреса</span></p><p>Физический адрес в Сингапуре, не абонентский ящик: подходит адрес секретаря</p><p class="muted">Для Employment Pass офис не обязателен, но MOM проверяет, что бизнес настоящий</p></td>
+            <td><p><span class="chip ok">в пакете</span></p><p>Во фризоне flexi-desk входит в лицензию, работать можно из дома. Число виз зависит от пакета</p><p class="muted">На материке (DET) нужен договор Ejari: бизнес-центр AED 8–15 тыс./год</p></td>
+            <td><p><span class="chip ok">Masdar: в пакете</span></p><p>Flexi-desk AED 2–10 тыс. в год даёт 1–3 визы</p><p class="muted">В KEZAD для склада нужно реальное помещение</p></td></tr>
 
-          <tr class="grp"><th colspan="7">Ежегодное обслуживание</th></tr>
+          <tr class="grp"><th colspan="7">Торговля мясом и кормами из России</th></tr>
+          <tr><th>Мясо из РФ</th>
+            <td><p><span class="chip ok">говядина, свинина, птица</span></p><p>Ветсертификаты согласованы (формы 22, 23, 24). Завод должен быть в списке FEHD</p><p class="muted">Птицу из отдельных областей временно закрывают при птичьем гриппе</p></td>
+            <td><p><span class="chip warn">птица, остальное уточнить</span></p><p>Российскую птицу ввозили; по говядине и баранине подтверждений нет. Разрешение Минсельхоза (MMAA) на каждую партию, бойня в одобренном списке</p><p class="muted">С 13.12.2025 халяль только от органа, аккредитованного GCC (GAC)</p></td>
+            <td><p><span class="chip ok">говядина, свинина, птица</span></p><p>Говядина с 04.2025, птица с 09.2025, свинина с 12.2025 (только из зон без АЧС). Завод должен быть аккредитован NMIS: в 2025–2026 их 17–18</p><p class="muted">С середины ноября 2026 по январь DA собирается приостановить разрешения на часть свинины (пока не подписано)</p></td>
+            <td><p><span class="chip crit">говядина запрещена</span></p><p>Нельзя: говядину в любом виде, охлаждённую и замороженную свинину. Можно: замороженную и переработанную птицу, переработанную свинину, около 15 заводов</p></td>
+            <td colspan="2"><p><span class="chip ok">говядина, баранина, птица</span></p><p>Сертификаты согласованы (формы 22, 24, 39), завод в списке MOCCAE, халяль от органа, зарегистрированного в MoIAT. Свинина на этом рынке фактически закрыта</p></td></tr>
+          <tr><th>Корма и корм для питомцев</th>
+            <td>Корм для питомцев ввозят без разрешения, с ветсертификатом. Правила по кормам для скота уточнить в AFCD</td>
+            <td>Корм для домашних животных согласован в марте 2026. Корм с животным белком — разрешение на каждую партию</td>
+            <td>BAI сертифицировал 2 завода «Мираторга» на кормовую муку. Импортёру нужна лицензия BAI и разрешение на партию</td>
+            <td>Корм с мясом из РФ — только после одобрения AVS продукта и завода; говядина в корме запрещена. Корма для скота регулирует SFA</td>
+            <td colspan="2">Российский корм для питомцев поставляют с 2024 года. Корма регистрируют в MOCCAE, сбор уточнить</td></tr>
+          <tr><th>Пошлина и НДС при ввозе</th>
+            <td><p><span class="chip ok">0%</span></p><p>Пошлин и НДС нет. Сбор за таможенную декларацию HK$0,20</p></td>
+            <td><p>Пошлина 5% от CIF (охлаждённые говядина и баранина 0%). НДС 10%: в списке 0% только свежее и охлаждённое мясо и птица, замороженное идёт по 10%</p></td>
+            <td><p>Свинина 15% в квоте / 25% сверх, курица 40%, говядина ~10%</p><p class="muted">Замороженное мясо и корма для скота без НДС, корм для питомцев 12%. DA добивается возврата пошлин на свинину 30–40%</p></td>
+            <td><p>Пошлин на еду нет. GST 9% при ввозе</p></td>
+            <td colspan="2"><p>5% на замороженные говядину и баранину, всю птицу, мясные изделия и корма; охлаждённые говядина и баранина 0%</p><p>С 06.10.2026 соглашение ЕАЭС–ОАЭ даёт льготы на мясо и птицу при сертификате происхождения формы EAE. НДС 5%, у зарегистрированного импортёра без живых денег (reverse charge)</p></td></tr>
+          <tr><th>Лицензии импортёра (схема Б)</th>
+            <td>Регистрация импортёра продуктов <span class="num">HK$195</span> на 3 года + бесплатная лицензия FEHD на каждую партию мяса</td>
+            <td>Код импортёра в таможне (OFOQ), ветразрешение на каждую партию, одобрение Минздрава на переработанные продукты</td>
+            <td>Лицензия NMIS <span class="num">₱15 000</span> на 3 года (капитал ₱5 млн и аренда холодильника), аккредитация на таможне, разрешение SPSIC на партию ₱255</td>
+            <td>Лицензия SFA <span class="num">S$84</span> в год + <span class="num">S$300</span> за разрешение на каждую партию мяса</td>
+            <td colspan="2">Код импортёра в таможне ~AED 120, регистрация продуктов в Dubai Municipality (в Абу-Даби — ADAFSA), склад, одобренный муниципалитетом</td></tr>
+          <tr><th>Склад (схема Б)</th>
+            <td>Только холодильник с лицензией FEHD, обычно у 3PL. Цены по запросу</td>
+            <td>Лицензированный продовольственный склад у 3PL. Цены по запросу</td>
+            <td>Договор с холодильником, аккредитованным NMIS, обязателен для лицензии импортёра</td>
+            <td>Холодильник 3PL ≈ <span class="num">S$80–200</span> за паллету в месяц</td>
+            <td colspan="2">Склад в JAFZA ≈ AED 320–560 за м² в год, холод отдельно; морозильная паллета от ~AED 40 в месяц</td></tr>
+
+          <tr class="grp"><th colspan="7">Обслуживание и налоги</th></tr>
           <tr><th>Секретарь, бухгалтерия, аудит</th>
-            <td><p><span class="num">HK$20–40 тыс./год</span> ≈ 200–400 тыс. ₽</p><p class="muted">Аудит обязателен каждый год. Annual return HK$105, BR HK$2 350, секретарь + адрес HK$5–8 тыс.</p></td>
+            <td><p><span class="num">HK$20–40 тыс./год</span> ≈ 205–410 тыс. ₽</p><p class="muted">Аудит обязателен каждый год. Annual return HK$105, BR HK$2 350, секретарь + адрес HK$5–8 тыс. Со складом и партиями аудит дороже</p></td>
             <td><p><span class="num">BHD 1 400–2 100/год</span> ≈ 300–450 тыс. ₽</p><p class="muted">Аудированная отчётность, продление CR</p></td>
-            <td><p><span class="num">₱230–430 тыс./год</span> ≈ 300–550 тыс. ₽</p><p class="muted">Бухгалтерия ₱8–20 тыс./мес, аудит ₱30–80 тыс., GIS, продление Mayor's permit в январе</p></td>
-            <td><p><span class="num">S$3–8 тыс./год</span> ≈ 190–500 тыс. ₽</p><p class="muted">Секретарь, бухгалтерия, декларации ECI и Form C, номинальный директор. Малой компании аудит не нужен (2 из 3: выручка и активы ≤ S$10 млн, ≤ 50 сотрудников)</p></td>
-            <td colspan="2"><p>Бухгалтерия, аудит и декларация по корпоративному налогу <span class="num">AED 8–15 тыс./год</span> ≈ 175–330 тыс. ₽</p><p>Со 2-го года ещё продление лицензии <span class="num">AED 12 500–20 000</span> ≈ 275–440 тыс. ₽ и визы раз в 2 года</p></td></tr>
+            <td><p><span class="num">₱230–430 тыс./год</span> ≈ 290–545 тыс. ₽</p><p class="muted">Бухгалтерия ₱8–20 тыс./мес, аудит ₱30–80 тыс., GIS, продление Mayor's permit в январе. С товарным учётом ближе к верхней границе</p></td>
+            <td><p><span class="num">S$3–8 тыс./год</span> ≈ 190–505 тыс. ₽</p><p class="muted">Секретарь, бухгалтерия, декларации ECI и Form C, номинальный директор. Малой компании аудит не нужен (2 из 3: выручка и активы ≤ S$10 млн, ≤ 50 сотрудников)</p></td>
+            <td colspan="2"><p>Бухгалтерия, аудит и декларация по налогу на прибыль <span class="num">AED 8–15 тыс./год</span> ≈ 175–330 тыс. ₽</p><p>Со 2-го года ещё ежегодное продление лицензии и продление визы раз в 2 года</p></td></tr>
           <tr><th>Налог на прибыль / НДС</th>
-            <td>8,25% до HK$2 млн прибыли, 16,5% сверх. НДС нет</td>
-            <td>0% (кроме нефти и крупных МНК). VAT 10% при обороте > BHD 37 500</td>
-            <td>25%, или 20% если прибыль ≤ ₱5 млн и активы ≤ ₱100 млн. VAT 12%</td>
-            <td>17%, но новой компании первые 3 года освобождают 75% первых S$100 тыс. прибыли. GST 9% при обороте > S$1 млн</td>
-            <td colspan="2"><p>9% с прибыли свыше AED 375 000. Во фризоне 0% на qualifying income, если есть аудит и реальное присутствие. Льгота Small Business Relief (выручка ≤ AED 3 млн) действует до периодов, заканчивающихся в 2026</p><p>VAT 5% при обороте > AED 375 000</p></td></tr>
+            <td><p>8,25% до HK$2 млн прибыли, 16,5% сверх. НДС нет</p><p class="muted">Не платить налог как «оффшорная» прибыль можно, только если и закупка, и продажа заключены вне HK. При продажах покупателям в HK не подходит</p></td>
+            <td><p>0% (кроме нефти и крупных международных групп). VAT 10% при обороте &gt; BHD 37 500</p><p class="muted">Законопроект о налоге 10% (выручка &gt; BHD 1 млн или прибыль &gt; BHD 200 тыс.) в парламенте, пока не принят</p></td>
+            <td>25%, или 20% если прибыль ≤ ₱5 млн и активы ≤ ₱100 млн. VAT 12%, кроме льготных продуктов</td>
+            <td>17%. Новой компании первые 3 года освобождают 75% первых S$100 тыс. прибыли и 50% следующих S$100 тыс. GST 9% при обороте &gt; S$1 млн</td>
+            <td colspan="2"><p>9% с прибыли свыше AED 375 000. До конца 2029 года при выручке ≤ AED 3 млн можно выбрать Small Business Relief и не платить</p><p class="muted">0% фризоны для торговли товарами — при продаже перепродавцам из Designated Zone (JAFZA, DAFZA, KEZAD/KIZAD и др.) с ввозом через неё или при продаже компаниям фризон. Продажи на материк и на экспорт из IFZA, Meydan, DMCC, Masdar — 9%. VAT 5% при обороте &gt; AED 375 000</p></td></tr>
+
+          <tr class="grp"><th colspan="7">Виза для жизни</th></tr>
+          <tr><th>Въезд без визы</th>
+            <td>14 дней, без права работать</td>
+            <td>eVisa или виза по прилёту: 2 недели или годовая мультивиза с пребыванием до 90 дней</td>
+            <td>30 дней, можно продлить на месте</td>
+            <td><span class="chip warn">нужна виза</span> Безвиза для россиян нет; одобрение Employment Pass служит однократной въездной визой</td>
+            <td colspan="2">90 дней из 180. Можно открыть компанию, но не работать и не открыть счёт как резидент</td></tr>
+          <tr><th>Через свою компанию</th>
+            <td>Investment as Entrepreneurs (GEP): минимума вложений нет, решают по бизнес-плану, вложениям и местным рабочим местам. Сбор HK$600 + HK$1 300. Виза до 3 лет, при продлении проверяют, выполнен ли план</td>
+            <td>Разрешение на работу LMRA от своей WLL: <span class="num">BHD 210</span> + медсбор BHD 180 на 2 года + BHD 7,5 в месяц (тарифы 2026; с 1.01.2027 — BHD 222 + 216 и BHD 10 в месяц). ВНЖ инвестора без работы — только при доле от BHD 100 000</td>
+            <td>Разрешение AEP в Минтруда (с объявлением о вакансии в газете) и виза 9(g). Через агента ₱80–150 тыс. ≈ 100–190 тыс. ₽, 6–12 недель, продление раз в 1–3 года</td>
+            <td>Employment Pass от своей Pte Ltd. Порог зарплаты растёт с возрастом: S$7 223 в 30 лет, S$7 918 в 33, S$9 541 в 40, S$10 700 с 45. С 2027 выше. Плюс 40 баллов COMPASS</td>
+            <td colspan="2">Виза инвестора или партнёра от фризоны на 2 года: медкомиссия, Emirates ID. Квота виз зависит от пакета: например, в Masdar flexi-desk даёт 1–3 визы</td></tr>
+          <tr><th>Реальные шансы</th>
+            <td><p><span class="chip crit">трудно</span></p><p>Новой торговой компании без истории, офиса и местных сотрудников обычно отказывают. Помогают реальный офис, сотрудники в HK, деньги на счёте, подписанные контракты</p></td>
+            <td><p><span class="chip warn">реально, мало практики</span></p><p>Ограничений для россиян не нашли, но и отзывов почти нет. Банк активирует счёт после визы</p></td>
+            <td><p><span class="chip ok">реально</span></p><p>Обычная процедура. Препятствие не виза, а капитал $200 000</p></td>
+            <td><p><span class="chip warn">только молодым</span></p><p>500 тыс. ₽ ≈ S$7 930 проходит до 33 лет, с 1.01.2027 — до 30. Для продления зарплату придётся поднимать. MOM проверяет обороты и контракты</p></td>
+            <td colspan="2"><p><span class="chip ok">реально</span></p><p>Запретов для россиян нет, но фризоны проверяют некоторые национальности дольше. Без визы и Emirates ID банк счёт не откроет</p></td></tr>
+          <tr><th>Если через компанию не выходит</th>
+            <td><p>Top Talent Pass: облагаемый доход от HK$2,5 млн (≈ 26 млн ₽) за прошлый год — виза на 3 года без оффера. Или диплом вуза из списка 200 (из российских там только МГУ) плюс 3 года стажа за последние 5 лет либо выпуск не раньше 5 лет назад — виза на 2 года. Для продления нужен живой бизнес или работа в HK</p><p class="muted">QMAS: 6 из 12 критериев, но не-материковым одобряют лишь сотни заявок в год. Осенью 2026 новых программ не появилось: Policy Address 16.09.2026 лишь упростил продление Top Talent Pass для техстартапов</p></td>
+            <td>Golden Residency: зарплата от BHD 2 000 после 5 лет в стране или недвижимость от BHD 130 000</td>
+            <td>SRRV: депозит $50 000 в 40–49 лет, $30 000 с 50 лет. SIRV ($75 000) на оптовую торговлю не распространяется</td>
+            <td>EntrePass — только для венчурных и технологических проектов. ONE Pass — зарплата от S$30 000 в месяц</td>
+            <td colspan="2">Green Visa на 5 лет: зарплата от AED 15 000 и диплом (наша ставка проходит). Golden Visa: недвижимость от AED 2 млн или зарплата от AED 30 000</td></tr>
+          <tr><th>Семья</th>
+            <td>Супруг(а) и дети до 18 лет, могут работать. Порог дохода не фиксирован</td>
+            <td>Супруг(а) и дети до 24 лет при зарплате от BHD 400</td>
+            <td>Супруг(а) и неженатые дети до 21 года по визе 9(g); для работы нужен свой AEP</td>
+            <td>Dependant's Pass при зарплате от S$6 000 — проходит. Супругу для работы нужен свой пропуск</td>
+            <td colspan="2">При зарплате от AED 4 000 (или AED 3 000 + жильё). Супруг(а) может работать с разрешением работодателя</td></tr>
 
           <tr class="grp"><th colspan="7">Сотрудник на 500 тыс. ₽</th></tr>
           <tr><th>Сверху платит компания</th>
-            <td><p><span class="num">+17 тыс. ₽/мес</span></p><p class="muted">MPF 5% с потолком HK$1 500/мес + обязательная страховка Employees' Compensation</p></td>
-            <td><p><span class="num">+47 тыс. ₽/мес</span> (≈ 8%)</p><p class="muted">SIO для экспата: травматизм ~3% + безработица 1% + выходное пособие 4,2% (первые 3 года), сбор LMRA. Разрешение на работу ~BHD 200 на 2 года + медкомиссия</p></td>
-            <td><p><span class="num">+50 тыс. ₽/мес</span> (≈ 10%)</p><p class="muted">Обязательная 13-я зарплата (+8,3%) и SSS / PhilHealth / Pag-IBIG с потолками. Для иностранца: AEP + виза 9(g) ≈ ₱50–80 тыс./год</p></td>
-            <td><p><span class="num">+4 тыс. ₽/мес</span> (≈ 1%)</p><p class="muted">Пенсионные взносы (CPF) за иностранца не платят. Сбор SDL до S$11,25/мес, медстраховка по желанию. Employment Pass: ставка от S$5 600/мес (выше с возрастом, с 2027 от S$6 000), 500 тыс. ₽ ≈ S$7 950 проходит</p></td>
+            <td><p><span class="num">+16 тыс. ₽/мес</span></p><p class="muted">MPF 5% с потолком HK$1 500/мес + обязательная страховка Employees' Compensation</p></td>
+            <td><p><span class="num">+38 тыс. ₽/мес</span> (≈ 7,5%)</p><p class="muted">SIO для экспата: травматизм 3% + выходное пособие 4,2% (с 4-го года 8,4%). Страховку от безработицы 1% платит сам сотрудник. Сбор LMRA BHD 10/мес с 2027</p></td>
+            <td><p><span class="num">+49 тыс. ₽/мес</span> (≈ 10%)</p><p class="muted">Обязательная 13-я зарплата (+8,3%) и SSS / PhilHealth / Pag-IBIG с потолками</p></td>
+            <td><p><span class="num">+4 тыс. ₽/мес</span> (≈ 1%)</p><p class="muted">Пенсионные взносы (CPF) за иностранца не платят. Сбор SDL до S$11,25/мес + медстраховка ≈ S$50/мес (для EP не обязательна, в расчёте учтена)</p></td>
             <td colspan="2"><p><span class="num">+36 тыс. ₽/мес</span> (≈ 7%)</p><p class="muted">Резерв на выходное пособие (gratuity): 21 день базовой зарплаты за год ≈ 5,75%. Обязательная медстраховка AED 1–6 тыс./год. Пенсионных взносов за иностранцев нет</p></td></tr>
           <tr><th>На руки сотруднику</th>
-            <td><span class="num">≈ 435 тыс. ₽</span> (87%): подоходный ~9–10% на таком доходе + MPF</td>
+            <td><span class="num">≈ 440 тыс. ₽</span> (88%): подоходный ~9% (необлагаемый минимум HK$145 тыс. с 2026/27) + MPF</td>
             <td><span class="num">≈ 495 тыс. ₽</span> (99%): подоходного налога нет</td>
             <td><span class="num">≈ 365 тыс. ₽</span> (73%): шкала до 35%, на таком доходе ~26%</td>
             <td><span class="num">≈ 475 тыс. ₽</span> (95%): шкала до 24%, на таком доходе ~5%, если живёте в стране от 183 дней в году</td>
@@ -296,78 +386,114 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
           <tr class="grp"><th colspan="7">Квартира, 1,5–2 спальни</th></tr>
           <tr><th>Аренда в месяц</th>
-            <td><p>Kennedy Town / HKU, 2 спальни, 450–550 sq ft полезной площади: <span class="num">HK$25–32 тыс.</span> ≈ 258–330 тыс. ₽</p><p><span class="chip crit">200 тыс. ₽ ≈ HK$19 400</span> хватает на 1 спальню в Kennedy Town или на 2 спальни в старом доме без лифта в Sai Ying Pun / Shek Tong Tsui</p></td>
-            <td>Juffair / Seef, 2 спальни с мебелью: <span class="num">BHD 380–600</span> ≈ 81–128 тыс. ₽, коммуналка часто включена. В расчёте BHD 450 ≈ 96 тыс. ₽</td>
-            <td>BGC / Makati, 2 спальни: <span class="num">₱65–150 тыс.</span> ≈ 83–192 тыс. ₽. В расчёте ₱90 тыс. ≈ 115 тыс. ₽</td>
-            <td>Tanjong Pagar / River Valley / Tiong Bahru, 2 спальни: <span class="num">S$4 700–6 500</span> ≈ 296–409 тыс. ₽. В расчёте S$5 500 ≈ 346 тыс. ₽</td>
-            <td>JLT / Marina / Business Bay, 2 спальни: <span class="num">AED 110–165 тыс. в год</span> ≈ 200–300 тыс. ₽/мес. В расчёте AED 135 тыс. ≈ 247 тыс. ₽/мес</td>
-            <td>Al Reem Island, 2 спальни: <span class="num">AED 97–115 тыс. в год</span> ≈ 177–210 тыс. ₽/мес. В расчёте AED 105 тыс. ≈ 192 тыс. ₽/мес</td></tr>
+            <td><p>Kennedy Town / HKU, 2 спальни, 450–550 sq ft полезной площади: <span class="num">HK$25–35 тыс.</span> ≈ 257–360 тыс. ₽</p><p><span class="chip crit">200 тыс. ₽ ≈ HK$19 500</span> хватает на 1 спальню в Kennedy Town или на 2 спальни в старом доме без лифта в Sai Ying Pun / Shek Tong Tsui</p></td>
+            <td>Juffair / Seef, 2 спальни с мебелью: <span class="num">BHD 380–600</span> ≈ 81–129 тыс. ₽, коммуналка часто включена. В расчёте BHD 450 ≈ 96 тыс. ₽</td>
+            <td>BGC / Makati, 2 спальни: обычно <span class="num">₱85–150 тыс.</span> ≈ 108–190 тыс. ₽, новые дома дороже. В расчёте ₱95 тыс. ≈ 120 тыс. ₽</td>
+            <td>Tanjong Pagar / River Valley / Tiong Bahru, 2 спальни: <span class="num">S$4 700–6 500</span> ≈ 296–410 тыс. ₽. В расчёте S$5 500 ≈ 347 тыс. ₽</td>
+            <td>JLT / Marina / Business Bay, 2 спальни: <span class="num">AED 95–165 тыс. в год</span> ≈ 175–300 тыс. ₽/мес. В расчёте AED 135 тыс. ≈ 247 тыс. ₽/мес</td>
+            <td>Al Reem Island, 2 спальни: <span class="num">AED 85–120 тыс. в год</span> ≈ 155–220 тыс. ₽/мес. В расчёте AED 105 тыс. ≈ 192 тыс. ₽/мес</td></tr>
           <tr><th>При заезде</th>
             <td>Депозит 2 мес. + первый месяц + агенту 0,5 мес. ≈ 700 тыс. ₽ (400 тыс. возвратные)</td>
             <td>Депозит 1 мес. ≈ 96 тыс. ₽</td>
-            <td>Депозит 2 мес. + аванс 1 мес. ≈ 345 тыс. ₽</td>
-            <td>Депозит 2 мес. при договоре на 2 года (1 мес. на год) + гербовый сбор 0,4% ≈ 710 тыс. ₽, из них 692 тыс. возвратные. Агенту при аренде от S$3 500 обычно платит владелец</td>
+            <td>Депозит 2 мес. + аванс 1 мес. ≈ 360 тыс. ₽. Некоторые владельцы просят до 6 месяцев вперёд</td>
+            <td>Депозит 2 мес. при договоре на 2 года (1 мес. на год) + гербовый сбор 0,4% от аренды за 2 года ≈ 727 тыс. ₽, из них 693 тыс. возвратные. Агенту при аренде от S$3 500 обычно платит владелец</td>
             <td><p>Аренду платят 1–4 чеками вперёд. При 2 чеках сразу ≈ <span class="num">1,48 млн ₽</span> за полгода</p><p class="muted">Плюс депозит 5%, агенту 5%, DEWA и Ejari ≈ 355 тыс. ₽</p></td>
-            <td><p>При 2 чеках сразу ≈ <span class="num">1,15 млн ₽</span> за полгода</p><p class="muted">Плюс депозит 5%, агенту, ADDC и Tawtheeq ≈ 290 тыс. ₽</p></td></tr>
+            <td><p>При 2 чеках сразу ≈ <span class="num">1,15 млн ₽</span> за полгода</p><p class="muted">Плюс депозит 5%, агенту, TAQA Distribution (бывш. ADDC) и Tawtheeq ≈ 290 тыс. ₽</p></td></tr>
 
           <tr class="grp"><th colspan="7">Итог</th></tr>
           <tr><th>Старт</th>
-            <td><span class="num">2,85 млн ₽</span></td>
-            <td><span class="num">2,7 млн ₽</span><p class="muted">+4,3 млн, если требуют BHD 20 000 капитала</p></td>
-            <td><span class="num">2,66 млн ₽</span><p class="muted">+16,1 млн, если продаёте на рынок Филиппин</p></td>
-            <td><span class="num">3,65 млн ₽</span><p class="muted">из них депозит за квартиру 692 тыс.</p></td>
-            <td><span class="num">4,0 млн ₽</span><p class="muted">из них полгода аренды вперёд</p></td>
+            <td><span class="num">2,86 млн ₽</span><p class="muted">для визы предпринимателя консультанты советуют показать HK$0,5–1 млн вложений</p></td>
+            <td><span class="num">2,7 млн ₽</span><p class="muted">+ капитал, который партнёры решат внести до регистрации</p></td>
+            <td><span class="num">19,0 млн ₽</span><p class="muted">из них 16,1 млн капитал; без филиппинской компании (схема А из другой страны) он не нужен</p></td>
+            <td><span class="num">3,68 млн ₽</span><p class="muted">из них депозит за квартиру 693 тыс.</p></td>
+            <td><span class="num">4,1 млн ₽</span><p class="muted">из них полгода аренды вперёд</p></td>
             <td><span class="num">3,7 млн ₽</span><p class="muted">из них полгода аренды вперёд</p></td></tr>
           <tr><th>Первый год</th>
-            <td><span class="num">9,1 млн ₽</span><p class="muted">≈ 9,8–10,6 млн с настоящей двушкой в Kennedy Town</p></td>
+            <td><span class="num">9,1 млн ₽</span><p class="muted">≈ 9,8–11,1 млн с настоящей двушкой в Kennedy Town</p></td>
+            <td><span class="num">8,9 млн ₽</span><p class="muted">без вознаграждения партнёру</p></td>
             <td><span class="num">9,0 млн ₽</span></td>
-            <td><span class="num">8,7 млн ₽</span></td>
             <td><span class="num">10,9 млн ₽</span><p class="muted">самая дорогая аренда в сравнении</p></td>
-            <td><span class="num">10,3 млн ₽</span></td>
+            <td><span class="num">10,4 млн ₽</span></td>
             <td><span class="num">9,7 млн ₽</span></td></tr>
         </tbody>
       </table>
     </div>
-    <p class="muted" style="font-size:13px">«Старт» = регистрация + виза + расходы на заезд + капитал по минимальному сценарию + 3 месяца расходов вперёд (в ОАЭ ещё 3 месяца аренды сверху, потому что её платят чеками). «Первый год» = разовые расходы + 12 месяцев, возвратные депозиты не включены.</p>
+    <p class="muted" style="font-size:13px">«Старт» = регистрация + виза + расходы на заезд + капитал по минимальному сценарию + 3 месяца расходов вперёд (в ОАЭ ещё 3 месяца аренды сверху, потому что её платят чеками). «Первый год» = разовые расходы + 12 месяцев, возвратные депозиты и уставной капитал не включены. Всё на одного человека: визы и страховка семьи, международная школа (≈ 0,6–3 млн ₽ в год на ребёнка) не входят. В Гонконге и Сингапуре секретарь и адрес 1-го года есть и в пакете агента, и в обслуживании, поэтому первый год там завышен примерно на 0,05–0,3 млн ₽. Считали схему А: склад, пошлины, сборы за партии и вознаграждение партнёру в Бахрейне не включены, они зависят от объёмов и договорённостей.</p>
   </section>
 
   <section class="notes" aria-label="Риски">
-    <div class="note c"><h3>Банковский счёт с паспортом РФ</h3><p>Главный риск во всех странах, включая ОАЭ: банки там заметно ужесточили проверку российских владельцев. Помогают ВНЖ третьей страны, понятные зарубежные клиенты и прозрачные источники денег. Про счёт лучше спросить агента до того, как платить за регистрацию, и заложить 1–3 месяца на открытие.</p></div>
-    <div class="note w"><h3>Капитал в Бахрейне</h3><p>Норма BHD 20 000 в одних источниках действует, в других отменена. До подачи нужно письменное подтверждение от агента или юрфирмы под ваш вид деятельности.</p></div>
-    <div class="note w"><h3>Статус экспортёра на Филиппинах</h3><p>Капитал ₱5 000 возможен, только если ≥60% выручки приходит из-за рубежа. Если хотя бы часть продаж пойдёт местным клиентам, порог становится $100–200 тыс.</p></div>
-    <div class="note w"><h3>Директор-резидент в Сингапуре</h3><p>Пока у основателя нет Employment Pass, нужен номинальный директор-резидент. Он отвечает за компанию, поэтому сервисы берут залог и строго проверяют клиента; с паспортом РФ возможны отказы.</p></div>
-    <div class="note w"><h3>Деньги вперёд в ОАЭ</h3><p>Лицензию оплачивают за год вперёд, аренду обычно на 6–12 месяцев. Помесячно можно снять через сервисы вроде Blueground, но это дороже.</p></div>
-    <div class="note o"><h3>Если нужно просто работать из дома</h3><p>Это без оговорок возможно в Гонконге и Сингапуре (адрес у секретаря) и во фризонах ОАЭ (flexi-desk входит в лицензию). В Бахрейне и Маниле нужен хотя бы минимальный коммерческий адрес по договору.</p></div>
+    <div class="note c"><h3>Банк и платежи российским поставщикам</h3><p>Главный риск во всех странах. Еда и корма не под санкциями США (лицензия OFAC GL 6D), но банки в HK, Сингапуре и ОАЭ боятся вторичных санкций: OCBC с ноября 2024 не проводит платежи, связанные с Россией, в ОАЭ российским компаниям закрывали счета. Маршрут оплаты поставщику (банк без санкций, юани или дирхамы) и счёт нужно согласовать до регистрации и заложить 1–3 месяца.</p></div>
+    <div class="note c"><h3>Компания не даёт визу автоматически</h3><p>Открыть компанию можно удалённо, но жить по ней — отдельное решение иммиграционной службы. В Гонконге новому трейдеру почти не дают визу предпринимателя, в Сингапуре мешает возрастной порог зарплаты. Проще всего в ОАЭ и на Филиппинах, в Бахрейне — через разрешение LMRA.</p></div>
+    <div class="note w"><h3>Допуск конкретного завода</h3><p>Страна открыта для мяса из России — ещё не значит, что открыт ваш поставщик. Завод должен стоять в списке страны и в реестре «Цербер» под неё, а для Бахрейна и ОАЭ нужен халяль от признанного там органа. Проверять до контракта.</p></div>
+    <div class="note w"><h3>Партнёр в Бахрейне</h3><p>Для торговли продуктами и кормами нужен бахрейнский партнёр. Долю определяют сами, но условия, право подписи и выход надо прописать в уставе и отдельном договоре.</p></div>
+    <div class="note w"><h3>Капитал и пошлины на Филиппинах</h3><p>Торговля на местном рынке требует $200 000 капитала. Свинина под угрозой: DA с середины ноября 2026 по январь собирается приостановить разрешения на часть отрубов, предлагает 2-месячный запрет ввоза и пошлины 30–40% (пока не принято).</p></div>
+    <div class="note w"><h3>Налог в ОАЭ: 0% или 9%</h3><p>До конца 2029 года малую компанию (выручка до AED 3 млн ≈ 66 млн ₽) спасает Small Business Relief. Дальше торговля на материк и на экспорт из IFZA, Meydan или Masdar облагается 9% с прибыли свыше AED 375 000, а 0% реален только в Designated Zone (JAFZA, DAFZA, KEZAD и др.) при ввозе через зону и ежегодной проверке аудитора.</p></div>
+    <div class="note w"><h3>Сингапур: узкий ассортимент</h3><p>Российскую говядину и замороженную свинину не пускают, корм для питомцев с мясом — только после одобрения AVS. Подходит для птицы и переработанной свинины или как трейдер, через которого товар не проходит.</p></div>
+    <div class="note w"><h3>Валютный контроль и КИК</h3><p>Российский поставщик ставит на учёт контракт от 10 млн ₽ и обязан получить оплату, обязательная продажа выручки сейчас 0%. Владельцу — валютному резиденту РФ нужно уведомить ФНС о личном счёте за рубежом и раз в год отчитываться о движении по нему; перевод денег на капитал из России ограничен лимитами ЦБ, их надо проверить заранее. Сингапур в списке «недружественных» стран, платежи с ним проверяют дольше.</p></div>
+    <div class="note c"><h3>Налоговое резидентство РФ</h3><p>Суммы «на руки» верны, только если вы провели в России меньше 183 дней за 12 месяцев и перестали быть налоговым резидентом РФ. Резидент платит НДФЛ и с зарплаты от зарубежной компании (≈ 15% на этой ставке, за вычетом местного налога, если есть соглашение), уведомляет ФНС об участии в компании от 10% и о КИК; прибыль КИК свыше 10 млн ₽ облагается в России.</p></div>
   </section>
 
   <footer class="src">
     <span class="eyebrow">Источники и проверка</span>
-    <p>Цифры по аренде и пакетам агентов взяты из объявлений и прайсов, это ориентиры, а не оферты. Взносы работодателя и налоги на руки посчитаны приблизительно.</p>
+    <p>Цифры по аренде и пакетам агентов взяты из объявлений и прайсов, это ориентиры, а не оферты. Взносы работодателя и налоги на руки посчитаны приблизительно. Допуск заводов и халяль-органов меняется, проверяйте по каждому поставщику.</p>
     <ul>
-      <li><a href="https://ppt.ru/currencies/26-10-2026">Курс ЦБ на 26.10.2026 (ppt.ru)</a></li>
+      <li><a href="https://www.cbr.ru/scripts/XML_daily.asp?date_req=01/11/2026">Курсы ЦБ на 31.10.2026</a></li>
       <li><a href="https://www.3ecpa.com.hk/blog/how-much-does-cost-set-up-company-hong-kong-2026-breakdown-all-fees/">Гонконг: госпошлины 2026 (3E CPA)</a></li>
-      <li><a href="https://sleek.com/hk/?p=70868">Гонконг: BR HK$2 350 с 1.04.2026 (Sleek)</a></li>
-      <li><a href="https://air-corporate.com/hk/blog/hong-kong-company-registration-cost">Гонконг: возврат сбора PWIF (Air Corporate)</a></li>
-      <li><a href="https://hongkonghomes.com/en/property/for-rent/western-kennedy-town/the-merton-block-02/31738">The Merton, 2BR 507 sq ft, HK$30 000</a></li>
-      <li><a href="https://www.shkpclub.com/en-us/newsletters/detail/1308">The Kennedy on Belcher's, от HK$25 000</a></li>
-      <li><a href="https://www.haqq.ai/blog/tasees-sharika-bahrain">Бахрейн: капитал WLL и Decree 28/2020 (HAQQ)</a></li>
-      <li><a href="https://www.hawksford.com/corporate-services/bahrain/starting-a-business">Бахрейн: открытие бизнеса (Hawksford)</a></li>
-      <li><a href="https://www.expanship.com/bh/blog/incorporation-requirements-in-bahrain">Бахрейн: требования к адресу (Expanship)</a></li>
-      <li><a href="https://www.expat.com/en/housing/middle-east/bahrain/manama/40-flats-for-rent/810876-rare-2br-plus-maid-3-baths-2-covered-parkings-sea-and-pool-view-juffair.html">Бахрейн: аренда в Juffair (expat.com)</a></li>
-      <li><a href="https://www.aseanbriefing.com/news/what-is-the-minimum-capital-required-for-a-foreign-owned-company-in-the-philippines/">Филиппины: минимальный капитал (ASEAN Briefing)</a></li>
-      <li><a href="https://ndvlaw.com/domestic-market-enterprise-vs-export-enterprise-in-the-philippines-foreign-investments-act-60-export-threshold-and-foreign-investor-capital-rules/">Филиппины: порог экспорта 60% (NDV Law)</a></li>
-      <li><a href="https://emerhub.com/philippines/cost-of-company-setup-in-the-philippines/">Филиппины: стоимость открытия (Emerhub)</a></li>
-      <li><a href="https://homes.trovit.ph/for-rent-2-bedroom-condominium-makati/20">Makati: аренда двушек (Trovit)</a></li>
-      <li><a href="https://avyanco.com/cost-of-company-formation-in-singapore/">Сингапур: стоимость открытия 2026 (Avyanco)</a></li>
+      <li><a href="https://www.cr.gov.hk/en/public/fees.htm">Гонконг: пошлины Companies Registry</a></li>
+      <li><a href="https://www.cfs.gov.hk/english/import/import_icfsg_07.html">Гонконг: лицензия на ввоз мяса (CFS)</a></li>
+      <li><a href="https://www.cfs.gov.hk/english/foodsafetyordinance/FSO_application.html">Гонконг: регистрация импортёра продуктов (CFS)</a></li>
+      <li><a href="https://old.fsvps.gov.ru/fsvps-docs/ru/importExport/gonkong/files/gonkong_crt_krs_meet_doc.doc">Гонконг: ветсертификат на говядину (Россельхознадзор)</a></li>
+      <li><a href="https://www.customs.gov.hk/en/cargo_clearance/declaration/charges/">Гонконг: сборы за декларацию (C&amp;ED)</a></li>
+      <li><a href="https://www.ird.gov.hk/eng/pdf/dipn21.pdf">Гонконг: оффшорная прибыль, DIPN 21 (IRD)</a></li>
+      <li><a href="https://www.immd.gov.hk/eng/services/visas/investment.html">Гонконг: виза предпринимателя (ImmD)</a></li>
+      <li><a href="https://www.immd.gov.hk/eng/services/visas/TTPS.html">Гонконг: Top Talent Pass (ImmD)</a></li>
+      <li><a href="https://www.immd.gov.hk/pdf/aggregate_list.pdf">Гонконг: список 200 вузов для Top Talent Pass</a></li>
+      <li><a href="https://www.immd.gov.hk/eng/faq/QMAS.html">Гонконг: QMAS, тест 6 из 12 (ImmD)</a></li>
+      <li><a href="https://www.policyaddress.gov.hk/2026/en/chapter3.html">Гонконг: Policy Address 2026, меры по талантам</a></li>
+      <li><a href="https://www.ird.gov.hk/eng/ppr/archives/26051303.htm">Гонконг: необлагаемый минимум HK$145 000 (2026)</a></li>
+      <li><a href="https://lloc.gov.bh/FullEn/RCAB4021.docx">Бахрейн: Решение 40/2021, списки видов деятельности</a></li>
+      <li><a href="https://lloc.gov.bh/FullEn/RCAB5324.docx">Бахрейн: Решение 53/2024, условия 100% владения</a></li>
+      <li><a href="https://www.lloc.gov.bh/Legislation/HTM/K5014">Бахрейн: капитал WLL, закон 50/2014</a></li>
+      <li><a href="https://bahraincustoms.gov.bh/en/node/718">Бахрейн: ввоз мяса (таможня)</a></li>
+      <li><a href="https://www.alta.ru/tamdoc/26a04790/">Бахрейн: согласованные сертификаты, март 2026 (Россельхознадзор)</a></li>
+      <li><a href="https://kpmg.com/us/en/taxnewsflash/news/2026/03/tnf-bahrain-overview-of-draft-law-introducing-10-percent-corporate-income-tax.html">Бахрейн: законопроект о налоге 10% (KPMG)</a></li>
+      <li><a href="https://globaltaxnews.ey.com/news/2026-0212-bahrain-hikes-visa-issuance-fees-health-care-fees-and-monthly-contributions-for-work-permits-effective-1-january-2026">Бахрейн: сборы LMRA с 2026 (EY)</a></li>
+      <li><a href="https://www.bahrain.bh/wps/portal/en/BNP/ServicesCatalogue/GSX-UI-PServiceDetails?psID=3003">Бахрейн: ВНЖ инвестора (NPRA)</a></li>
+      <li><a href="https://www.propertyfinder.bh/ar/plp/rent/apartment-for-rent-capital-governorate-al-juffair-988473">Бахрейн: аренда в Juffair (Property Finder)</a></li>
+      <li><a href="https://lawphil.net/statutes/repacts/ra2022/ra_11647_2022.html">Филиппины: капитал $200 000, RA 11647</a></li>
+      <li><a href="https://www.grantthornton.com.ph/technical-alerts/tax-alert/2025/implementation-of-the-revised-documentary-stamp-tax-rates-and-exemptions-under-cmepa/">Филиппины: гербовый сбор 0,75% (Grant Thornton)</a></li>
+      <li><a href="https://importlicensing.wto.org/content/meat-and-meat-preparations-0">Филиппины: лицензия импортёра мяса NMIS (ВТО)</a></li>
+      <li><a href="https://interfax.com/newsroom/top-stories/111080/">Филиппины: допуск российской говядины (Interfax)</a></li>
+      <li><a href="https://businessmirror.com.ph/2025/12/29/pampi-welcomes-lifting-of-ban-on-russian-pork/">Филиппины: снятие запрета на российскую свинину</a></li>
+      <li><a href="https://www.manilatimes.net/2026/10/26/business/top-business/da-to-restore-tariff-on-imported-pork-suspend-issuance-of-clearances/2453544">Филиппины: планы DA по свинине, октябрь 2026</a></li>
+      <li><a href="https://batasnatin.com/doctrine/tax-VAT-exempt-transactions-Sec-109">Филиппины: льготы по НДС на продукты, s.109</a></li>
+      <li><a href="https://vialtopartners.com/regional-alerts/philippines-immigration-supplemental-guidelines-of-dole-department-order-no-248-series-of-2025">Филиппины: AEP по DO 248-25 (Vialto)</a></li>
       <li><a href="https://osome.com/sg/guides/company-incorporation-cost/">Сингапур: пошлины ACRA и сервисы (Osome)</a></li>
-      <li><a href="https://aniday.com/en/singapore/employment-pass">Сингапур: ставки Employment Pass 2026–2027 (Aniday)</a></li>
+      <li><a href="https://www.sfa.gov.sg/docs/default-source/food-import-and-export/list_of_approved_countries_regions.pdf">Сингапур: список одобренных стран SFA (07.2026)</a></li>
+      <li><a href="https://www.sfa.gov.sg/news-publications/circulars-and-notices/circulars/2024/trade-circular-on-revision-to-the-fee-for-permit-to-import-frozen--chilled-and-processed-meat-products">Сингапур: S$300 за разрешение на партию мяса (SFA)</a></li>
+      <li><a href="https://avs.nparks.gov.sg/businesses/commercial-importers-exporters/animal-feed/importing-pet-food">Сингапур: ввоз корма для питомцев (AVS)</a></li>
+      <li><a href="https://www.mom.gov.sg/passes-and-permits/employment-pass/eligibility">Сингапур: пороги Employment Pass по возрасту (MOM)</a></li>
+      <li><a href="https://www.iras.gov.sg/taxes/corporate-income-tax/basics-of-corporate-income-tax/corporate-income-tax-rate-rebates-and-tax-exemption-schemes">Сингапур: льготы по налогу на прибыль (IRAS)</a></li>
       <li><a href="https://www.99.co/singapore/rent/tanjong-pagar/2-bedrooms?page_num=6">Сингапур: аренда двушек в Tanjong Pagar (99.co)</a></li>
-      <li><a href="https://avyanco.com/meydan-free-zone-cost/">Дубай: стоимость Meydan, июль 2026 (Avyanco)</a></li>
-      <li><a href="https://www.vjmglobal.com/feeds/blog/dubai-freezone-company-setup-cost">Дубай: стоимость фризон 2026 (VJM Global)</a></li>
+      <li><a href="https://avyanco.com/ifza-free-zone-cost/">Дубай: стоимость IFZA (Avyanco)</a></li>
+      <li><a href="https://www.jafza.ae/resources/guides/what-is-a-trading-license">Дубай: торговая лицензия JAFZA</a></li>
+      <li><a href="https://dmcc.ae/members/support/schedule-charges">Дубай: тарифы DMCC</a></li>
+      <li><a href="https://tax.gov.ae/DataFolder/Files/Legislation/Designated%20Zones%20-%2021%2009%202021%20sep21.pdf">ОАЭ: список Designated Zones (FTA)</a></li>
+      <li><a href="https://mof.gov.ae/wp-content/uploads/2025/09/EN-Ministerial-Decision-No.-229-of-2025-Regarding-Qualifying-Activities-and-Excluded-Activities.pdf">ОАЭ: qualifying activities, решение 229/2025</a></li>
+      <li><a href="https://khaleejtimes.com/business/uae-extends-corporate-tax-relief-for-small-businesses-until-2029">ОАЭ: Small Business Relief до 2029</a></li>
+      <li><a href="https://eec.eaeunion.org/news/andrey-slepnev-coglashenie-ob-ekonomicheskom-partnerstve-mezhdu-eaes-i-oae-vstupit-v-silu-6-oktyabrya/">ЕАЭС–ОАЭ: соглашение с 6 октября 2026 (ЕЭК)</a></li>
+      <li><a href="https://tariff-finder.govt.nz/assets/Schedule-of-Tariff-Commitments-of-United-Arab-Emirates.pdf">ОАЭ: ставки пошлин по кодам</a></li>
+      <li><a href="https://old.fsvps.gov.ru/fsvps-docs/ru/importExport/oae/files/oae_krs_doc.doc">ОАЭ: ветсертификат на говядину (Россельхознадзор)</a></li>
+      <li><a href="https://qc.moiat.gov.ae/en/services/registration-of-halal-certification-bodies">ОАЭ: регистрация халяль-органов (MoIAT)</a></li>
+      <li><a href="https://www.meydanfz.ae/relocation-dubai-ru/uae-residency-russian-business-owners">ОАЭ: виза для владельцев бизнеса (Meydan)</a></li>
+      <li><a href="https://icp.gov.ae/en/services/uae-green-residency/">ОАЭ: Green Visa (ICP)</a></li>
+      <li><a href="https://masdarcityfreezone.com/resources/blog/launch-your-business-flexi-desk-masdar-city-free-zone">Абу-Даби: flexi-desk и квоты виз Masdar</a></li>
       <li><a href="https://www.bayut.com/to-rent/2-bedroom-apartments/dubai/jumeirah-lake-towers-jlt/jlt-cluster-b/">Дубай: аренда двушек в JLT (Bayut)</a></li>
-      <li><a href="https://ybcase.com/en/fintech/polucit-innovacionnuu-licenziu-v-adgm">Абу-Даби: ADGM Tech Startup License</a></li>
-      <li><a href="https://uppersetup.com/ru/blog/masdar-city-free-zone-2026-a-complete-breakdown-of-abu">Абу-Даби: Masdar City 2026 (UpperSetup)</a></li>
       <li><a href="https://www.dubizzle.com/property-for-rent/residential/apartmentflat/2026/7/30/stunning-sea-view-prime-location-rent-n-3-225808/">Абу-Даби: аренда на Al Reem (Dubizzle)</a></li>
+      <li><a href="https://ofac.treasury.gov/recent-actions/20240612">США: лицензия OFAC GL 6D на продовольствие</a></li>
+      <li><a href="https://interfax.com/newsroom/top-stories/117643/">Россельхознадзор: заводы для Сингапура (Interfax)</a></li>
+      <li><a href="https://www.interfax.ru/business/1112657">Обязательная продажа валютной выручки 0% (Интерфакс)</a></li>
+      <li><a href="https://www.nalog.gov.ru/rn60/news/activities_fts/13119996/">Уведомление о КИК (ФНС)</a></li>
     </ul>
   </footer>
 </div>
